@@ -1,0 +1,127 @@
+<header class="mac-header">
+  <div class="header-container">
+    <!-- Logo Section -->
+    <div class="logo-section">
+      <a href="/" class="logo-link">
+        <h1 class="logo">MAC Shop</h1>
+      </a>
+    </div>
+
+    <!-- Navigation Section -->
+    <nav class="main-navigation">
+      <ul class="nav-list">
+        <li class="nav-item">
+          <a href="/apparel" class="nav-link">Apparel</a>
+        </li>
+        <li class="nav-item">
+          <a href="/kids" class="nav-link">Kids</a>
+        </li>
+        <li class="nav-item">
+          <a href="/books" class="nav-link">Books</a>
+        </li>
+        <li class="nav-item">
+          <a href="/gifts" class="nav-link">Gifts</a>
+        </li>
+        <li class="nav-item">
+          <a href="/collectables" class="nav-link">Collectable items</a>
+        </li>
+        <li class="nav-item">
+          <a href="/craftsmanship" class="nav-link">Fine craftsmanship</a>
+        </li>
+      </ul>
+    </nav>
+
+    <!-- Right Actions Section -->
+    <div class="header-actions">
+      <!-- Language Selector -->
+      <div class="language-selector">
+        <button class="language-btn" type="button">
+          IT
+        </button>
+      </div>
+
+      <!-- Search -->
+      <button class="action-btn search-btn" type="button" aria-label="Search">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="11" cy="11" r="8"></circle>
+          <path d="m21 21-4.35-4.35"></path>
+        </svg>
+      </button>
+
+      <!-- Settings/Account -->
+      <button class="action-btn settings-btn" type="button" aria-label="Account">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="3"></circle>
+          <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1 1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+        </svg>
+      </button>
+
+      <!-- Cart -->
+      <div class="cart-container" (mouseenter)="showCartDropdown = true" (mouseleave)="showCartDropdown = false">
+        <button class="action-btn cart-btn" type="button" aria-label="Shopping Cart" (click)="viewCart()">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="9" cy="21" r="1"></circle>
+          <circle cx="20" cy="21" r="1"></circle>
+          <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path>
+        </svg>
+        <span class="cart-count" *ngIf="cartItemCount > 0">{{ cartItemCount }}</span>
+      </button>
+
+        <!-- Cart Dropdown -->
+        <div class="cart-dropdown" *ngIf="showCartDropdown && cartItems.length > 0">
+          <div class="cart-dropdown-content">
+            <!-- Cart Items -->
+            <div class="cart-items">
+              <div class="cart-item" *ngFor="let item of cartItems">
+                <div class="item-image">
+                  <img [src]="item.image" [alt]="item.name" />
+                </div>
+                <div class="item-details">
+                  <h4 class="item-name">{{ item.name }}</h4>
+                  <div class="item-price-quantity">
+                    <div class="quantity-controls">
+                      <button class="quantity-btn" (click)="decreaseQuantity(item.id)">-</button>
+                      <span class="quantity">{{ item.quantity }}</span>
+                      <button class="quantity-btn" (click)="increaseQuantity(item.id)">+</button>
+                    </div>
+                    <span class="item-price">${{ (item.price * item.quantity).toFixed(2) }}</span>
+                  </div>
+                </div>
+                <button class="remove-item" (click)="removeItem(item.id)">×</button>
+              </div>
+            </div>
+
+            <!-- Subtotal -->
+            <div class="cart-subtotal">
+              <span class="subtotal-label">Subtotal:</span>
+              <span class="subtotal-amount">${{ cartTotal.toFixed(2) }}</span>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="cart-actions">
+              <button class="view-cart-btn" (click)="viewCart()">View cart</button>
+              <button class="checkout-btn" (click)="checkout()">Checkout</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Empty Cart Message -->
+        <div class="cart-dropdown empty-cart" *ngIf="showCartDropdown && cartItems.length === 0">
+          <div class="empty-cart-content">
+            <p>Your cart is empty</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tickets -->
+      <button class="action-btn tickets-btn" type="button" aria-label="Tickets">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v2z"></path>
+          <path d="M13 5v2"></path>
+          <path d="M13 17v2"></path>
+          <path d="M13 11v2"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</header>

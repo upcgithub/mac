@@ -1,0 +1,199 @@
+<!-- Header Component -->
+<app-header></app-header>
+
+<main class="cart-page">
+  <div class="container">
+    <!-- Page Title -->
+    <div class="page-header">
+      <h1 class="page-title">Shopping Cart</h1>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="cart-content" *ngIf="cartItems.length > 0; else emptyCart">
+      <!-- Cart Table -->
+      <div class="cart-table-section">
+        <div class="cart-table">
+          <!-- Table Header -->
+          <div class="table-header">
+            <div class="col-product">Product</div>
+            <div class="col-price">Price</div>
+            <div class="col-quantity">Quantity</div>
+            <div class="col-subtotal">Subtotal</div>
+          </div>
+
+          <!-- Cart Items -->
+          <div class="table-body">
+            <div class="cart-item" *ngFor="let item of cartItems; trackBy: trackByItemId">
+              <!-- Remove Button -->
+              <button class="remove-item" (click)="removeFromCart(item.id)" aria-label="Remove item">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="18" y1="6" x2="6" y2="18"></line>
+                  <line x1="6" y1="6" x2="18" y2="18"></line>
+                </svg>
+              </button>
+
+              <!-- Product Info -->
+              <div class="product-info">
+                <div class="product-image">
+                  <img [src]="item.image" [alt]="item.name" />
+                </div>
+                <div class="product-details">
+                  <h3 class="product-name">{{ item.name }}</h3>
+                </div>
+              </div>
+
+              <!-- Price -->
+              <div class="item-price">
+                ${{ item.price.toFixed(2) }}
+              </div>
+
+              <!-- Quantity Controls -->
+              <div class="quantity-controls">
+                <button 
+                  class="quantity-btn decrease" 
+                  (click)="updateQuantity(item.id, item.quantity - 1)"
+                  [disabled]="item.quantity <= 1"
+                >
+                  -
+                </button>
+                <input 
+                  type="number" 
+                  class="quantity-input" 
+                  [value]="item.quantity"
+                  (change)="onQuantityInputChange(item.id, $event)"
+                  min="1"
+                  max="99"
+                />
+                <button 
+                  class="quantity-btn increase" 
+                  (click)="updateQuantity(item.id, item.quantity + 1)"
+                >
+                  +
+                </button>
+              </div>
+
+              <!-- Subtotal -->
+              <div class="item-subtotal">
+                ${{ (item.price * item.quantity).toFixed(2) }}
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Coupon Section -->
+        <div class="coupon-section">
+          <form class="coupon-form" (ngSubmit)="applyCoupon()">
+            <input 
+              type="text" 
+              class="coupon-input" 
+              placeholder="Coupon code"
+              [(ngModel)]="couponCode"
+              name="coupon"
+            />
+            <button 
+              type="submit" 
+              class="apply-coupon-btn"
+              [disabled]="!couponCode || isApplyingCoupon"
+            >
+              {{ isApplyingCoupon ? 'Applying...' : 'Apply coupon' }}
+            </button>
+          </form>
+          
+          <!-- Coupon Message -->
+          <div class="coupon-message" *ngIf="couponMessage">
+            <p [class.success]="couponMessage.includes('applied')" 
+               [class.error]="!couponMessage.includes('applied')">
+              {{ couponMessage }}
+            </p>
+          </div>
+
+          <!-- Update Cart Button -->
+          <button class="update-cart-btn" (click)="updateCart()">
+            Update cart
+          </button>
+        </div>
+      </div>
+
+      <!-- Cart Layout: Suggestions + Totals -->
+      <div class="cart-bottom-section">
+        <!-- You May Be Interested Section -->
+        <div class="suggestions-section">
+          <h2 class="suggestions-title">You may be interested in...</h2>
+          <div class="suggestions-grid">
+            <div class="suggestion-item" *ngFor="let product of suggestedProducts">
+              <div class="suggestion-image">
+                <img [src]="product.image" [alt]="product.name" />
+              </div>
+              <div class="suggestion-info">
+                <h3 class="suggestion-name">{{ product.name }}</h3>
+                <p class="suggestion-price">${{ product.price.toFixed(2) }}</p>
+                <button 
+                  class="add-suggestion-btn"
+                  (click)="addToCart(product)"
+                >
+                  Add to cart
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Cart Totals -->
+        <div class="cart-totals-section">
+          <div class="cart-totals">
+            <h2 class="totals-title">Cart totals</h2>
+            
+            <div class="totals-row">
+              <span class="totals-label">Subtotal</span>
+              <span class="totals-value">${{ getSubtotal().toFixed(2) }}</span>
+            </div>
+
+            <div class="shipping-info">
+              <div class="totals-row">
+                <span class="totals-label">Shipping</span>
+                <div class="shipping-details">
+                  <span class="shipping-cost">Corriere: ${{ shippingCost.toFixed(2) }}</span>
+                  <p class="shipping-location">Shipping to {{ shippingLocation }}.</p>
+                  <button class="change-address-btn" (click)="changeAddress()">
+                    Change address
+                  </button>
+                </div>
+              </div>
+            </div>
+
+            <div class="totals-row total-row">
+              <span class="totals-label">Total</span>
+              <span class="totals-value total-amount">${{ getTotal().toFixed(2) }}</span>
+            </div>
+
+            <button class="checkout-btn" (click)="proceedToCheckout()">
+              Proceed to checkout
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Empty Cart State -->
+    <ng-template #emptyCart>
+      <div class="empty-cart">
+        <div class="empty-cart-icon">
+          <svg width="80" height="80" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1">
+            <circle cx="9" cy="21" r="1"></circle>
+            <circle cx="20" cy="21" r="1"></circle>
+            <path d="m1 1 4 4 14 14H6L4.5 7 2 1"></path>
+            <path d="M16 11h5l-5 5-5-5h5z"></path>
+          </svg>
+        </div>
+        <h2 class="empty-cart-title">Your cart is empty</h2>
+        <p class="empty-cart-message">Looks like you haven't added any items to your cart yet.</p>
+        <button class="continue-shopping-btn" (click)="continueShopping()">
+          Continue Shopping
+        </button>
+      </div>
+    </ng-template>
+  </div>
+</main>
+
+<!-- Footer Component -->
+<app-footer></app-footer> 

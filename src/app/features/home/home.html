@@ -1,0 +1,220 @@
+<!-- Header Component -->
+<app-header></app-header>
+
+<!-- Main Content -->
+<main class="home-page">
+  <!-- Hero Banner Slider Section -->
+  <section class="hero-banner">
+    <div class="hero-container">
+      <div class="hero-slider">
+        <!-- Slide 1 - Medusa -->
+        <div class="slide active">
+          <img src="/assets/images/medusa-hero-banner.jpg" alt="Medusa by Caravaggio" class="slide-image">
+          <div class="slide-content">
+            <h1 class="artwork-title">Medusa</h1>
+            <p class="artwork-artist">Caravaggio, c. 1597</p>
+            <button class="purchase-btn">Comprar ahora</button>
+          </div>
+        </div>
+        
+        <!-- Slide 2 - Interchange de Willem -->
+        <div class="slide">
+          <img src="/assets/images/Interchange de Willem.png" alt="Interchange de Willem" class="slide-image">
+          <div class="slide-content">
+            <h1 class="artwork-title">Interchange</h1>
+            <p class="artwork-artist">Willem de Kooning, 1955</p>
+            <button class="purchase-btn">Comprar ahora</button>
+          </div>
+        </div>
+        
+        <!-- Slide 3 - Pool with two figures -->
+        <div class="slide">
+          <img src="/assets/images/Pool with two figures.png" alt="Pool with two figures" class="slide-image">
+          <div class="slide-content">
+            <h1 class="artwork-title">Pool with Two Figures</h1>
+            <p class="artwork-artist">David Hockney, 1972</p>
+            <button class="purchase-btn">Comprar ahora</button>
+          </div>
+        </div>
+        
+        <!-- Navigation arrows -->
+        <button class="slider-nav prev" onclick="changeSlide(-1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="15,18 9,12 15,6"></polyline>
+          </svg>
+        </button>
+        <button class="slider-nav next" onclick="changeSlide(1)">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <polyline points="9,18 15,12 9,6"></polyline>
+          </svg>
+        </button>
+        
+        <!-- Dots indicator -->
+        <div class="slider-dots">
+          <button class="dot active" onclick="currentSlide(1)"></button>
+          <button class="dot" onclick="currentSlide(2)"></button>
+          <button class="dot" onclick="currentSlide(3)"></button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Featured Products Section -->
+  <section class="featured-products">
+    <div class="container">
+      <div class="products-grid">
+        <!-- Product 1: Las Grotescas del MAC -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="/assets/images/book.png" alt="Las Grotescas del MAC" class="product-image">
+          </div>
+          <h3 class="product-title">Las Grotescas del MAC</h3>
+          <p class="product-price">$ 100.00</p>
+          <button class="view-more-btn">View more →</button>
+        </div>
+
+        <!-- Product 2: Snakes tote bags -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="/assets/images/statue.png" alt="Snakes tote bags" class="product-image">
+          </div>
+          <h3 class="product-title">Snakes tote bags</h3>
+          <p class="product-price">$ 25.00</p>
+          <button class="view-more-btn">View more →</button>
+        </div>
+
+        <!-- Product 3: Nano Morgante Lucky charm -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="/assets/images/the currency.png" alt="Nano Morgante Lucky charm" class="product-image">
+          </div>
+          <h3 class="product-title">Nano Morgante Lucky charm</h3>
+          <p class="product-price">From $ 15.00</p>
+          <button class="view-more-btn">View more →</button>
+        </div>
+
+        <!-- Product 4: Aquaflor ambient fragrance -->
+        <div class="product-card">
+          <div class="product-image-container">
+            <img src="/assets/images/Interchange de Willem.png" alt="Aquaflor ambient fragrance" class="product-image">
+          </div>
+          <h3 class="product-title">Aquaflor ambient fragrance</h3>
+          <p class="product-price">From $ 55.00</p>
+          <button class="view-more-btn">View more →</button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- MAC Kids Banner -->
+  <section class="kids-banner">
+    <div class="container">
+      <div class="kids-content">
+        <div class="kids-text">
+          <h2 class="kids-title">Descubre la nueva marca MAC Kids</h2>
+          <p class="kids-price">From $ 20</p>
+          <button class="view-more-btn">View more →</button>
+        </div>
+        <div class="kids-image">
+                      <img src="/assets/images/collezionismo.png" alt="MAC Kids Collection" class="kids-img">
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- New Arrivals Section -->
+  <section class="new-arrivals">
+    <div class="container">
+      <h2 class="section-title">New arrivals</h2>
+      <div class="arrivals-grid">
+        <!-- Row 1 -->
+        <div class="arrival-card clickable" (click)="navigateToProduct('20th-century-art-collection')">
+          <img src="/assets/images/Century.png" alt="20th Century Art Collection" class="arrival-image">
+          <h4 class="arrival-title">20TH CENTURY ART COLLECTION</h4>
+          <p class="arrival-price">$45.00</p>
+        </div>
+        
+        <div class="arrival-card clickable" (click)="navigateToProduct('abstraktes-bild-gerhard-richter')">
+          <img src="/assets/images/Abstraktes Bild.png" alt="Abstraktes Bild by Gerhard Richter" class="arrival-image">
+          <h4 class="arrival-title">ABSTRAKTES BILD - GERHARD RICHTER</h4>
+          <p class="arrival-price">$85.00</p>
+        </div>
+        
+        <div class="arrival-card clickable" (click)="navigateToProduct('andy-warhol-print-collection')">
+          <img src="/assets/images/Andy Warhol.png" alt="Andy Warhol Print Collection" class="arrival-image">
+          <h4 class="arrival-title">ANDY WARHOL PRINT COLLECTION</h4>
+          <p class="arrival-price">$65.00</p>
+        </div>
+        
+        <div class="arrival-card clickable" (click)="navigateToProduct('damien-hirst-contemporary')">
+          <img src="/assets/images/Damien Hirst.png" alt="Damien Hirst Contemporary Art" class="arrival-image">
+          <h4 class="arrival-title">DAMIEN HIRST CONTEMPORARY</h4>
+          <p class="arrival-price">$120.00</p>
+        </div>
+        
+        <!-- Row 2 -->
+        <div class="arrival-card clickable" (click)="navigateToProduct('david-hockney-pool-series')">
+          <img src="/assets/images/David Hockney.png" alt="David Hockney Pool Series" class="arrival-image">
+          <h4 class="arrival-title">DAVID HOCKNEY POOL SERIES</h4>
+          <p class="arrival-price">$95.00</p>
+        </div>
+        
+        <div class="arrival-card clickable" (click)="navigateToProduct('nina-con-un-globo')">
+          <img src="/assets/images/Nina con un Globo.png" alt="Nina con un Globo - Contemporary Art" class="arrival-image">
+          <h4 class="arrival-title">NINA CON UN GLOBO</h4>
+          <p class="arrival-price">$55.00</p>
+        </div>
+        
+        <div class="arrival-card clickable" (click)="navigateToProduct('kaws-contemporary-collection')">
+          <img src="/assets/images/Obras de Kaws.png" alt="KAWS Contemporary Collection" class="arrival-image">
+          <h4 class="arrival-title">KAWS CONTEMPORARY COLLECTION</h4>
+          <p class="arrival-price">$180.00</p>
+        </div>
+        
+        <div class="arrival-card clickable" (click)="navigateToProduct('yayoi-kusama-infinity')">
+          <img src="/assets/images/Yayoi Kusama.png" alt="Yayoi Kusama Infinity Collection" class="arrival-image">
+          <h4 class="arrival-title">YAYOI KUSAMA INFINITY</h4>
+          <p class="arrival-price">$150.00</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Newsletter Section -->
+  <section class="newsletter">
+    <div class="container">
+      <div class="newsletter-content">
+        <div class="newsletter-logo">🏛️</div>
+                  <h3 class="newsletter-title">Mantente en contacto con MAC Shop</h3>
+        <form class="newsletter-form">
+          <input type="email" placeholder="Enter your email" class="email-input">
+          <button type="submit" class="subscribe-btn">Subscribe →</button>
+        </form>
+        <p class="newsletter-disclaimer">Data protection disclaimer...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Service Features -->
+  <section class="service-features">
+    <div class="container">
+      <div class="features-grid">
+        <div class="feature-item">
+          <div class="feature-icon">📦</div>
+          <h4 class="feature-title">RETURNS GUARANTEE</h4>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">🎧</div>
+          <h4 class="feature-title">CUSTOMER CARE</h4>
+        </div>
+        <div class="feature-item">
+          <div class="feature-icon">💳</div>
+          <h4 class="feature-title">SECURE PAYMENTS</h4>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Footer Component -->
+<app-footer></app-footer>

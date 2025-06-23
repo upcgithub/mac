@@ -1,0 +1,118 @@
+# Dependencies
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# IDEs and editors
+/.idea
+.project
+.classpath
+.c9/
+*.launch
+.settings/
+*.sublime-workspace
+.vscode/
+
+# IDE - VSCode
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# System Files
+.DS_Store
+Thumbs.db
+
+# Angular
+/dist/
+/tmp/
+/out-tsc/
+/bazel-out
+
+# Angular CLI
+.angular/
+
+# Environment files
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+environment.*.ts
+!environment.example.ts
+
+# Logs
+logs
+*.log
+
+# Runtime data
+pids
+*.pid
+*.seed
+*.pid.lock
+
+# Coverage directory used by tools like istanbul
+coverage/
+*.lcov
+
+# nyc test coverage
+.nyc_output
+
+# Dependency directories
+jspm_packages/
+
+# Optional npm cache directory
+.npm
+
+# Optional eslint cache
+.eslintcache
+
+# Optional REPL history
+.node_repl_history
+
+# Output of 'npm pack'
+*.tgz
+
+# Yarn Integrity file
+.yarn-integrity
+
+# Build outputs
+build/
+dist/
+
+# Supabase
+.supabase/
+
+# AI Generated files (temporary)
+/temp-ai-generations/
+*.ai-temp
+
+# API Keys and secrets
+.env.keys
+secrets.json
+api-keys.txt
+
+# Database
+*.db
+*.sqlite
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# OS generated files
+.DS_Store?
+ehthumbs.db
+Icon?
+
+# Editor backup files
+*~
+*.swp
+*.swo
+
+# Package manager lock files (keep one)
+# package-lock.json
+# yarn.lock 
