@@ -245,11 +245,11 @@ export class OpenaiImageService {
     switch (productType.toLowerCase()) {
       case 'hoodie':
       case 'sudadera':
-        return basePrompt + `utiliza la prenda de la primera imagen y usala como la prenda de la persona de la segunda imagen.`;
+        return basePrompt + `utiliza la prenda de la primera imagen y usala como la prenda de la persona de la segunda imagen, no modifiques los rasgos faciales de la persona.`;
       
       case 't-shirt':
       case 'camiseta':
-        return basePrompt + `utiliza la prenda de la primera imagen y usala como la prenda de la persona de la segunda imagen.`;
+        return basePrompt + `utiliza la prenda de la primera imagen y usala como la prenda de la persona de la segunda imagen, no modifiques los rasgos faciales de la persona.`;
       
       case 'poster':
       case 'cuadro':

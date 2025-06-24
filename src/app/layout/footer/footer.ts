@@ -64,9 +64,9 @@ export class FooterComponent {
   // Social media methods
   openSocialMedia(platform: string): void {
     const urls = {
-          facebook: 'https://www.facebook.com/museoartemexico',
-    instagram: 'https://www.instagram.com/museoartemexico',
-    twitter: 'https://twitter.com/museoartemexico',
+          facebook: 'https://www.facebook.com/maclima',
+    instagram: 'https://www.instagram.com/maclima',
+    twitter: 'https://twitter.com/maclima',
       youtube: 'https://www.youtube.com/channel/UCVFaRNkLFtdKqNLsLLOFv5w'
     };
 

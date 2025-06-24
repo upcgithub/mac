@@ -4,12 +4,12 @@
 
 // Color Palette (from visual analysis)
 :root {
-  --mac-beige: #f5f1e8;
-  --mac-black: #000000;
-  --mac-white: #ffffff;
-  --mac-gray-light: #f8f8f8;
-  --mac-gray-medium: #cccccc;
-  --mac-gray-dark: #666666;
+  --uffizi-beige: #f5f1e8;
+  --uffizi-black: #000000;
+  --uffizi-white: #ffffff;
+  --uffizi-gray-light: #f8f8f8;
+  --uffizi-gray-medium: #cccccc;
+  --uffizi-gray-dark: #666666;
 }
 
 // Reset and Base Styles
@@ -22,8 +22,8 @@
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
   line-height: 1.6;
-  color: var(--mac-black);
-  background-color: var(--mac-white);
+  color: var(--uffizi-black);
+  background-color: var(--uffizi-white);
 }
 
 // Typography

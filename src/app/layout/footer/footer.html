@@ -6,10 +6,10 @@
       <div class="footer-column footer-brand">
         <div class="footer-logo">
           <h3 class="logo-text">MAC Shop</h3>
-          <p class="brand-tagline">Discover art, culture, and elegance</p>
+          <p class="brand-tagline">Descubre arte, cultura y elegancia</p>
         </div>
         <div class="social-section">
-          <h4 class="section-title">Visit our Social Store</h4>
+          <h4 class="section-title">Visita nuestra Tienda Social</h4>
                      <div class="social-links">
              <button class="social-link" (click)="openSocialMedia('facebook')" aria-label="Facebook">
                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -37,44 +37,44 @@
 
       <!-- Column 2: Products -->
       <div class="footer-column">
-        <h4 class="section-title">Products</h4>
+        <h4 class="section-title">Productos</h4>
         <ul class="footer-links">
-          <li><a href="/apparel" class="footer-link">Apparel</a></li>
-          <li><a href="/promotions" class="footer-link">Promotions</a></li>
-          <li><a href="/kids" class="footer-link">Kids</a></li>
-          <li><a href="/books" class="footer-link">Books</a></li>
-          <li><a href="/gifts" class="footer-link">Gifts</a></li>
-          <li><a href="/collectables" class="footer-link">Collectable items</a></li>
-          <li><a href="/craftsmanship" class="footer-link">Fine craftsmanship</a></li>
-          <li><a href="/tickets" class="footer-link">Tickets</a></li>
+          <li><a href="/apparel" class="footer-link">Ropa</a></li>
+          <li><a href="/promotions" class="footer-link">Promociones</a></li>
+          <li><a href="/kids" class="footer-link">Niños</a></li>
+          <li><a href="/books" class="footer-link">Libros</a></li>
+          <li><a href="/gifts" class="footer-link">Regalos</a></li>
+          <li><a href="/collectables" class="footer-link">Artículos coleccionables</a></li>
+          <li><a href="/craftsmanship" class="footer-link">Artesanía fina</a></li>
+          <li><a href="/tickets" class="footer-link">Entradas</a></li>
         </ul>
       </div>
 
       <!-- Column 3: Assistance -->
       <div class="footer-column">
-        <h4 class="section-title">Assistance</h4>
+        <h4 class="section-title">Asistencia</h4>
         <ul class="footer-links">
-          <li><a href="/customer-care" class="footer-link">Customer Care</a></li>
-          <li><a href="/contacts" class="footer-link">Contacts</a></li>
-          <li><a href="/login" class="footer-link">Login</a></li>
-          <li><a href="/cart" class="footer-link">Cart</a></li>
-          <li><a href="/terms" class="footer-link">Terms of Service</a></li>
-          <li><a href="/shipping" class="footer-link">Shipping Info</a></li>
-          <li><a href="/returns" class="footer-link">Returns & Exchanges</a></li>
-          <li><a href="/faq" class="footer-link">FAQ</a></li>
-          <li><a href="/privacy" class="footer-link">Privacy Policy</a></li>
-          <li><a href="/cookies" class="footer-link">Cookie Policy</a></li>
+          <li><a href="/customer-care" class="footer-link">Atención al Cliente</a></li>
+          <li><a href="/contacts" class="footer-link">Contactos</a></li>
+          <li><a href="/login" class="footer-link">Iniciar Sesión</a></li>
+          <li><a href="/cart" class="footer-link">Carrito</a></li>
+          <li><a href="/terms" class="footer-link">Términos de Servicio</a></li>
+          <li><a href="/shipping" class="footer-link">Información de Envío</a></li>
+          <li><a href="/returns" class="footer-link">Devoluciones y Cambios</a></li>
+          <li><a href="/faq" class="footer-link">Preguntas Frecuentes</a></li>
+          <li><a href="/privacy" class="footer-link">Política de Privacidad</a></li>
+          <li><a href="/cookies" class="footer-link">Política de Cookies</a></li>
         </ul>
       </div>
 
       <!-- Column 4: Newsletter & Contact -->
       <div class="footer-column footer-newsletter">
-        <h4 class="section-title">Stay Connected</h4>
-        <p class="newsletter-text">Subscribe to receive updates on new arrivals, special offers, and exclusive events.</p>
+        <h4 class="section-title">Mantente Conectado</h4>
+        <p class="newsletter-text">Suscríbete para recibir actualizaciones sobre nuevas llegadas, ofertas especiales y eventos exclusivos.</p>
                  <form class="newsletter-form" (ngSubmit)="onNewsletterSubmit($event)">
            <input 
              type="email" 
-             placeholder="Enter your email" 
+             placeholder="Ingresa tu email" 
              class="newsletter-input"
              [(ngModel)]="newsletterEmail"
              name="email"
@@ -85,14 +85,14 @@
              class="newsletter-btn"
              [disabled]="isSubscribing"
            >
-             {{ isSubscribing ? 'Subscribing...' : 'Subscribe' }}
+             {{ isSubscribing ? 'Suscribiendo...' : 'Suscribirse' }}
            </button>
          </form>
          
          <!-- Newsletter feedback message -->
          <div class="newsletter-feedback" *ngIf="subscriptionMessage">
-           <p [class.success]="subscriptionMessage.includes('Thank you')" 
-              [class.error]="subscriptionMessage.includes('valid email')">
+           <p [class.success]="subscriptionMessage.includes('Gracias')" 
+              [class.error]="subscriptionMessage.includes('email válido')">
              {{ subscriptionMessage }}
            </p>
          </div>
@@ -100,9 +100,9 @@
         <div class="contact-info">
           <h5 class="contact-title">Visita Museo de Arte Contemporáneo</h5>
           <p class="contact-text">
-            Av. Insurgentes Sur 421<br>
-                          Ciudad de México, México<br>
-              <a href="tel:+525555123456" class="contact-link">+52 55 5512 3456</a>
+            av. Alm. Grau 1511,  Barranco<br>
+                          Lima, Perú<br>
+              <a href="tel:+515555123456" class="contact-link">+51 55 5512 3456</a>
           </p>
         </div>
       </div>
@@ -114,11 +114,11 @@
     <div class="footer-container">
       <div class="copyright-content">
                  <div class="copyright-text">
-                   <p>&copy; {{ getCurrentYear() }} MAC Shop. All rights reserved.</p>
-        <p>Powered by Fundación MAC | Official Museo de Arte Contemporáneo merchandise partner</p>
+                   <p>&copy; {{ getCurrentYear() }} MAC Shop. Todos los derechos reservados.</p>
+        <p>Desarrollado por Fundación MAC | Socio oficial de mercancía del Museo de Arte Contemporáneo</p>
          </div>
         <div class="payment-methods">
-          <span class="payment-text">Accepted payments:</span>
+          <span class="payment-text">Pagos aceptados:</span>
           <div class="payment-icons">
             <!-- Visa -->
             <svg width="32" height="20" viewBox="0 0 32 20" fill="none">
