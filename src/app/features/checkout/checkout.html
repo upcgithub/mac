@@ -5,11 +5,11 @@
   <div class="container">
     <!-- Page Header -->
     <div class="page-header">
-      <h1 class="page-title">Checkout</h1>
+      <h1 class="page-title">Finalizar Compra</h1>
       <div class="breadcrumb">
-        <a href="/cart" class="breadcrumb-link">Cart</a>
+        <a href="/cart" class="breadcrumb-link">Carrito</a>
         <span class="breadcrumb-separator">›</span>
-        <span class="breadcrumb-current">Checkout</span>
+        <span class="breadcrumb-current">Finalizar Compra</span>
       </div>
     </div>
 
@@ -19,18 +19,18 @@
       <div class="checkout-forms">
         <!-- Customer Information -->
         <div class="form-section">
-          <h2 class="section-title">Customer Information</h2>
+          <h2 class="section-title">Información del Cliente</h2>
           <form class="customer-form">
             <div class="form-row">
               <div class="form-group">
-                <label for="email" class="form-label">Email Address *</label>
+                <label for="email" class="form-label">Correo Electrónico *</label>
                 <input 
                   type="email" 
                   id="email" 
                   class="form-input"
                   [(ngModel)]="customerInfo.email"
                   name="email"
-                  placeholder="your@email.com"
+                  placeholder="tu@email.com"
                   required
                 />
               </div>
@@ -38,26 +38,26 @@
             
             <div class="form-row">
               <div class="form-group half">
-                <label for="firstName" class="form-label">First Name *</label>
+                <label for="firstName" class="form-label">Nombre *</label>
                 <input 
                   type="text" 
                   id="firstName" 
                   class="form-input"
                   [(ngModel)]="customerInfo.firstName"
                   name="firstName"
-                  placeholder="John"
+                  placeholder="Juan"
                   required
                 />
               </div>
               <div class="form-group half">
-                <label for="lastName" class="form-label">Last Name *</label>
+                <label for="lastName" class="form-label">Apellido *</label>
                 <input 
                   type="text" 
                   id="lastName" 
                   class="form-input"
                   [(ngModel)]="customerInfo.lastName"
                   name="lastName"
-                  placeholder="Doe"
+                  placeholder="Pérez"
                   required
                 />
               </div>
@@ -65,14 +65,14 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="phone" class="form-label">Phone Number</label>
+                <label for="phone" class="form-label">Número de Teléfono</label>
                 <input 
                   type="tel" 
                   id="phone" 
                   class="form-input"
                   [(ngModel)]="customerInfo.phone"
                   name="phone"
-                  placeholder="+1 (555) 123-4567"
+                  placeholder="+51 (555) 123-4567"
                 />
               </div>
             </div>
@@ -81,18 +81,18 @@
 
         <!-- Shipping Address -->
         <div class="form-section">
-          <h2 class="section-title">Shipping Address</h2>
+          <h2 class="section-title">Dirección de Envío</h2>
           <form class="shipping-form">
             <div class="form-row">
               <div class="form-group">
-                <label for="address" class="form-label">Street Address *</label>
+                <label for="address" class="form-label">Dirección *</label>
                 <input 
                   type="text" 
                   id="address" 
                   class="form-input"
                   [(ngModel)]="shippingAddress.address"
                   name="address"
-                  placeholder="123 Main Street"
+                  placeholder="123 Calle Principal"
                   required
                 />
               </div>
@@ -100,51 +100,51 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="apartment" class="form-label">Apartment, suite, etc.</label>
+                <label for="apartment" class="form-label">Apartamento, suite, etc.</label>
                 <input 
                   type="text" 
                   id="apartment" 
                   class="form-input"
                   [(ngModel)]="shippingAddress.apartment"
                   name="apartment"
-                  placeholder="Apt 4B"
+                  placeholder="Apto 4B"
                 />
               </div>
             </div>
 
             <div class="form-row">
               <div class="form-group half">
-                <label for="city" class="form-label">City *</label>
+                <label for="city" class="form-label">Ciudad *</label>
                 <input 
                   type="text" 
                   id="city" 
                   class="form-input"
                   [(ngModel)]="shippingAddress.city"
                   name="city"
-                  placeholder="Florence"
+                  placeholder="Lima"
                   required
                 />
               </div>
               <div class="form-group quarter">
-                <label for="state" class="form-label">State/Province</label>
+                <label for="state" class="form-label">Estado/Provincia</label>
                 <input 
                   type="text" 
                   id="state" 
                   class="form-input"
                   [(ngModel)]="shippingAddress.state"
                   name="state"
-                  placeholder="Tuscany"
+                  placeholder="Lima"
                 />
               </div>
               <div class="form-group quarter">
-                <label for="zipCode" class="form-label">ZIP/Postal Code *</label>
+                <label for="zipCode" class="form-label">Código Postal *</label>
                 <input 
                   type="text" 
                   id="zipCode" 
                   class="form-input"
                   [(ngModel)]="shippingAddress.zipCode"
                   name="zipCode"
-                  placeholder="50122"
+                  placeholder="15001"
                   required
                 />
               </div>
@@ -152,7 +152,7 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="country" class="form-label">Country *</label>
+                <label for="country" class="form-label">País *</label>
                 <select 
                   id="country" 
                   class="form-select"
@@ -161,15 +161,15 @@
                   (change)="onCountryChange($event)"
                   required
                 >
-                  <option value="">Select Country</option>
-                  <option value="IT">Italy</option>
-                  <option value="US">United States</option>
-                  <option value="GB">United Kingdom</option>
-                  <option value="FR">France</option>
-                  <option value="DE">Germany</option>
-                  <option value="ES">Spain</option>
-                  <option value="PE">Peru</option>
-                  <option value="OTHER">Other</option>
+                  <option value="">Seleccionar País</option>
+                  <option value="IT">Italia</option>
+                  <option value="US">Estados Unidos</option>
+                  <option value="GB">Reino Unido</option>
+                  <option value="FR">Francia</option>
+                  <option value="DE">Alemania</option>
+                  <option value="ES">España</option>
+                  <option value="PE">Perú</option>
+                  <option value="OTHER">Otro</option>
                 </select>
               </div>
             </div>
@@ -185,7 +185,7 @@
                     name="useSameForBilling"
                   />
                   <span class="checkbox-custom"></span>
-                  Use same address for billing
+                  Usar la misma dirección para facturación
                 </label>
               </div>
             </div>
@@ -194,19 +194,19 @@
 
         <!-- Billing Address (if different) -->
         <div class="form-section" *ngIf="!useSameForBilling">
-          <h2 class="section-title">Billing Address</h2>
+          <h2 class="section-title">Dirección de Facturación</h2>
           <form class="billing-form">
             <!-- Similar structure to shipping address -->
             <div class="form-row">
               <div class="form-group">
-                <label for="billingAddress" class="form-label">Street Address *</label>
+                <label for="billingAddress" class="form-label">Dirección *</label>
                 <input 
                   type="text" 
                   id="billingAddress" 
                   class="form-input"
                   [(ngModel)]="billingAddress.address"
                   name="billingAddress"
-                  placeholder="123 Billing Street"
+                  placeholder="123 Calle de Facturación"
                   required
                 />
               </div>
@@ -217,7 +217,7 @@
 
         <!-- Payment Method -->
         <div class="form-section">
-          <h2 class="section-title">Payment Method</h2>
+          <h2 class="section-title">Método de Pago</h2>
           
           <!-- Payment Options -->
           <div class="payment-methods">
@@ -230,7 +230,7 @@
                 class="payment-radio"
               />
               <div class="payment-option-content">
-                <span class="payment-text">Credit Card</span>
+                <span class="payment-text">Tarjeta de Crédito</span>
                 <div class="payment-icons">
                   <img src="/assets/images/visa_logo.svg" alt="Visa" class="payment-icon" />
                   <img src="/assets/images/mastercard.svg" alt="Mastercard" class="payment-icon" />
@@ -259,7 +259,7 @@
           <div class="card-form" *ngIf="selectedPaymentMethod === 'card'">
             <div class="form-row">
               <div class="form-group">
-                <label for="cardNumber" class="form-label">Card Number *</label>
+                <label for="cardNumber" class="form-label">Número de Tarjeta *</label>
                 <input 
                   type="text" 
                   id="cardNumber" 
@@ -276,14 +276,14 @@
 
             <div class="form-row">
               <div class="form-group half">
-                <label for="expiryDate" class="form-label">Expiry Date *</label>
+                <label for="expiryDate" class="form-label">Fecha de Vencimiento *</label>
                 <input 
                   type="text" 
                   id="expiryDate" 
                   class="form-input"
                   [(ngModel)]="paymentInfo.expiryDate"
                   name="expiryDate"
-                  placeholder="MM/YY"
+                  placeholder="MM/AA"
                   (input)="formatExpiryDate($event)"
                   maxlength="5"
                   required
@@ -306,14 +306,14 @@
 
             <div class="form-row">
               <div class="form-group">
-                <label for="cardName" class="form-label">Name on Card *</label>
+                <label for="cardName" class="form-label">Nombre en la Tarjeta *</label>
                 <input 
                   type="text" 
                   id="cardName" 
                   class="form-input"
                   [(ngModel)]="paymentInfo.cardName"
                   name="cardName"
-                  placeholder="John Doe"
+                  placeholder="Juan Pérez"
                   required
                 />
               </div>
@@ -325,7 +325,7 @@
       <!-- Right Column: Order Summary -->
       <div class="order-summary">
         <div class="summary-card">
-          <h2 class="summary-title">Order Summary</h2>
+          <h2 class="summary-title">Resumen del Pedido</h2>
           
           <!-- Order Items -->
           <div class="order-items">
@@ -347,12 +347,12 @@
               <input 
                 type="text" 
                 class="discount-input" 
-                placeholder="Discount code"
+                placeholder="Código de descuento"
                 [(ngModel)]="discountCode"
                 name="discountCode"
               />
               <button type="submit" class="discount-btn" [disabled]="!discountCode">
-                Apply
+                Aplicar
               </button>
             </form>
           </div>
@@ -360,7 +360,7 @@
           <!-- Applied Discount -->
           <div class="applied-discount" *ngIf="appliedDiscount > 0">
             <div class="discount-row">
-              <span class="discount-label">Discount ({{ appliedDiscount }}%)</span>
+              <span class="discount-label">Descuento ({{ appliedDiscount }}%)</span>
               <span class="discount-amount">-${{ getDiscountAmount().toFixed(2) }}</span>
               <button class="remove-discount" (click)="removeDiscount()">×</button>
             </div>
@@ -374,12 +374,12 @@
             </div>
             
             <div class="total-row">
-              <span class="total-label">Shipping</span>
+              <span class="total-label">Envío</span>
               <span class="total-value">${{ shippingCost.toFixed(2) }}</span>
             </div>
 
             <div class="total-row" *ngIf="appliedDiscount > 0">
-              <span class="total-label">Discount</span>
+              <span class="total-label">Descuento</span>
               <span class="total-value discount">-${{ getDiscountAmount().toFixed(2) }}</span>
             </div>
 
@@ -395,8 +395,8 @@
             (click)="placeOrder()"
             [disabled]="!isFormValid() || isProcessing"
           >
-            <span *ngIf="!isProcessing">Complete Order</span>
-            <span *ngIf="isProcessing">Processing...</span>
+            <span *ngIf="!isProcessing">Completar Pedido</span>
+            <span *ngIf="isProcessing">Procesando...</span>
           </button>
 
           <!-- Security Notice -->
@@ -406,7 +406,7 @@
               <circle cx="12" cy="16" r="1"></circle>
               <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
             </svg>
-            <span>Your payment information is secure and encrypted</span>
+            <span>Tu información de pago está segura y encriptada</span>
           </div>
         </div>
       </div>

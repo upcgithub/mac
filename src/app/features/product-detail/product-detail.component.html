@@ -3,7 +3,7 @@
 
 <!-- Loading State -->
 <div *ngIf="loading" class="loading-container">
-  <div class="loading-spinner">Loading...</div>
+  <div class="loading-spinner">Cargando...</div>
 </div>
 
 <!-- Product Detail Content -->
@@ -21,7 +21,7 @@
           <button 
             *ngIf="productAngles.length > 0"
             class="image-nav prev" 
-            aria-label="Previous angle"
+            aria-label="Ángulo anterior"
             (click)="previousAngle()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="15,18 9,12 15,6"></polyline>
@@ -30,7 +30,7 @@
           <button 
             *ngIf="productAngles.length > 0"
             class="image-nav next" 
-            aria-label="Next angle"
+            aria-label="Siguiente ángulo"
             (click)="nextAngle()">
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
               <polyline points="9,18 15,12 9,6"></polyline>
@@ -89,7 +89,7 @@
 
         <div class="product-description">
           <p>{{ product.shortDescription }}</p>
-          <a href="#" class="read-more-link">Read more...</a>
+          <a href="#" class="read-more-link">Leer más...</a>
         </div>
 
         <!-- Quantity and Add to Cart -->
@@ -105,7 +105,7 @@
             *ngIf="!hasProductTypes()"
             class="add-to-cart-btn" 
             (click)="addToCart()">
-            Add to cart
+            Agregar al carrito
           </button>
           
           <button 
@@ -136,10 +136,10 @@
 
         <!-- Availability -->
         <div class="availability-info">
-          <span class="availability-label">Availability:</span>
+          <span class="availability-label">Disponibilidad:</span>
           <span class="availability-status" [class.in-stock]="product.availability === 'in-stock'" 
                 [class.out-of-stock]="product.availability === 'out-of-stock'">
-            {{ product.availability === 'in-stock' ? 'In stock' : 'Out of stock' }}
+            {{ product.availability === 'in-stock' ? 'En stock' : 'Agotado' }}
           </span>
         </div>
 
@@ -150,7 +150,7 @@
             <span class="meta-value">{{ product.sku }}</span>
           </div>
           <div class="meta-item">
-            <span class="meta-label">Categories:</span>
+            <span class="meta-label">Categorías:</span>
             <span class="meta-value">
               <span *ngFor="let category of product.categories; let last = last">
                 {{ category }}<span *ngIf="!last">, </span>
@@ -171,7 +171,7 @@
                 <path d="M12 21c0-1 1-3 3-3s3 2 3 3-1 3-3 3-3-2-3-3"/>
               </svg>
             </div>
-            <h4 class="feature-title">RETURNS GUARANTEE</h4>
+            <h4 class="feature-title">GARANTÍA DE DEVOLUCIONES</h4>
           </div>
           
           <div class="feature-item">
@@ -183,7 +183,7 @@
                 <line x1="8" x2="16" y1="22" y2="22"/>
               </svg>
             </div>
-            <h4 class="feature-title">CUSTOMER CARE</h4>
+            <h4 class="feature-title">ATENCIÓN AL CLIENTE</h4>
           </div>
           
           <div class="feature-item">
@@ -193,7 +193,7 @@
                 <line x1="2" x2="22" y1="10" y2="10"/>
               </svg>
             </div>
-            <h4 class="feature-title">SECURE PAYMENTS</h4>
+            <h4 class="feature-title">PAGOS SEGUROS</h4>
           </div>
         </div>
       </div>
@@ -205,12 +205,12 @@
         <button class="tab-btn" 
                 [class.active]="activeTab === 'description'"
                 (click)="setActiveTab('description')">
-          Description
+          Descripción
         </button>
         <button class="tab-btn" 
                 [class.active]="activeTab === 'additional'"
                 (click)="setActiveTab('additional')">
-          Additional information
+          Información adicional
         </button>
       </div>
 
@@ -223,31 +223,31 @@
             <!-- Book specific details -->
             <div class="book-details" *ngIf="product.details">
               <div class="detail-row" *ngIf="product.details.editor">
-                <strong>Edited by:</strong> {{ product.details.editor }}
+                <strong>Editado por:</strong> {{ product.details.editor }}
               </div>
               <div class="detail-row" *ngIf="product.details.publisher">
-                <strong>Publisher:</strong> {{ product.details.publisher }}
+                <strong>Editorial:</strong> {{ product.details.publisher }}
               </div>
               <div class="detail-row" *ngIf="product.details.cover">
-                <strong>Cover:</strong> {{ product.details.cover }}
+                <strong>Tapa:</strong> {{ product.details.cover }}
               </div>
               <div class="detail-row" *ngIf="product.details.pages">
-                <strong>Pages:</strong> {{ product.details.pages }}
+                <strong>Páginas:</strong> {{ product.details.pages }}
               </div>
               <div class="detail-row" *ngIf="product.details.dimensions">
-                <strong>Dimensions:</strong> {{ product.details.dimensions }}
+                <strong>Dimensiones:</strong> {{ product.details.dimensions }}
               </div>
               <div class="detail-row" *ngIf="product.details.publicationDate">
-                <strong>Publication date:</strong> {{ product.details.publicationDate }}
+                <strong>Fecha de publicación:</strong> {{ product.details.publicationDate }}
               </div>
               <div class="detail-row" *ngIf="product.details.isbn">
                 <strong>ISBN:</strong> {{ product.details.isbn }}
               </div>
               <div class="detail-row" *ngIf="product.details.weight">
-                <strong>Item weight:</strong> {{ product.details.weight }}
+                <strong>Peso del artículo:</strong> {{ product.details.weight }}
               </div>
               <div class="detail-row" *ngIf="product.details.language">
-                <strong>Language:</strong> {{ product.details.language }}
+                <strong>Idioma:</strong> {{ product.details.language }}
               </div>
             </div>
           </div>
@@ -256,7 +256,7 @@
         <!-- Additional Information Tab -->
         <div class="tab-panel" *ngIf="activeTab === 'additional'">
           <div class="additional-info">
-            <p>Additional product information will be displayed here.</p>
+            <p>Aquí se mostrará información adicional del producto.</p>
             <!-- Aquí se pueden agregar especificaciones técnicas adicionales -->
           </div>
         </div>
@@ -269,9 +269,9 @@
 <main class="product-not-found" *ngIf="!loading && !product">
   <div class="container">
     <div class="not-found-content">
-      <h1>Product Not Found</h1>
-      <p>The product you're looking for doesn't exist.</p>
-      <button class="back-btn" (click)="goBack()">Go Back</button>
+      <h1>Producto no encontrado</h1>
+      <p>El producto que buscas no existe.</p>
+      <button class="back-btn" (click)="goBack()">Volver</button>
     </div>
   </div>
 </main>

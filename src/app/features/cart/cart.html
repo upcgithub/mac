@@ -5,7 +5,7 @@
   <div class="container">
     <!-- Page Title -->
     <div class="page-header">
-      <h1 class="page-title">Shopping Cart</h1>
+      <h1 class="page-title">Carrito de Compras</h1>
     </div>
 
     <!-- Cart Content -->
@@ -15,9 +15,9 @@
         <div class="cart-table">
           <!-- Table Header -->
           <div class="table-header">
-            <div class="col-product">Product</div>
-            <div class="col-price">Price</div>
-            <div class="col-quantity">Quantity</div>
+            <div class="col-product">Producto</div>
+            <div class="col-price">Precio</div>
+            <div class="col-quantity">Cantidad</div>
             <div class="col-subtotal">Subtotal</div>
           </div>
 
@@ -25,7 +25,7 @@
           <div class="table-body">
             <div class="cart-item" *ngFor="let item of cartItems; trackBy: trackByItemId">
               <!-- Remove Button -->
-              <button class="remove-item" (click)="removeFromCart(item.id)" aria-label="Remove item">
+              <button class="remove-item" (click)="removeFromCart(item.id)" aria-label="Eliminar artículo">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                   <line x1="18" y1="6" x2="6" y2="18"></line>
                   <line x1="6" y1="6" x2="18" y2="18"></line>
@@ -86,7 +86,7 @@
             <input 
               type="text" 
               class="coupon-input" 
-              placeholder="Coupon code"
+              placeholder="Código de cupón"
               [(ngModel)]="couponCode"
               name="coupon"
             />
@@ -95,21 +95,21 @@
               class="apply-coupon-btn"
               [disabled]="!couponCode || isApplyingCoupon"
             >
-              {{ isApplyingCoupon ? 'Applying...' : 'Apply coupon' }}
+              {{ isApplyingCoupon ? 'Aplicando...' : 'Aplicar cupón' }}
             </button>
           </form>
           
           <!-- Coupon Message -->
           <div class="coupon-message" *ngIf="couponMessage">
-            <p [class.success]="couponMessage.includes('applied')" 
-               [class.error]="!couponMessage.includes('applied')">
+            <p [class.success]="couponMessage.includes('aplicado')" 
+               [class.error]="!couponMessage.includes('aplicado')">
               {{ couponMessage }}
             </p>
           </div>
 
           <!-- Update Cart Button -->
           <button class="update-cart-btn" (click)="updateCart()">
-            Update cart
+            Actualizar carrito
           </button>
         </div>
       </div>
@@ -118,7 +118,7 @@
       <div class="cart-bottom-section">
         <!-- You May Be Interested Section -->
         <div class="suggestions-section">
-          <h2 class="suggestions-title">You may be interested in...</h2>
+          <h2 class="suggestions-title">Te puede interesar...</h2>
           <div class="suggestions-grid">
             <div class="suggestion-item" *ngFor="let product of suggestedProducts">
               <div class="suggestion-image">
@@ -131,7 +131,7 @@
                   class="add-suggestion-btn"
                   (click)="addToCart(product)"
                 >
-                  Add to cart
+                  Agregar al carrito
                 </button>
               </div>
             </div>
@@ -141,7 +141,7 @@
         <!-- Cart Totals -->
         <div class="cart-totals-section">
           <div class="cart-totals">
-            <h2 class="totals-title">Cart totals</h2>
+            <h2 class="totals-title">Total del carrito</h2>
             
             <div class="totals-row">
               <span class="totals-label">Subtotal</span>
@@ -150,12 +150,12 @@
 
             <div class="shipping-info">
               <div class="totals-row">
-                <span class="totals-label">Shipping</span>
+                <span class="totals-label">Envío</span>
                 <div class="shipping-details">
-                  <span class="shipping-cost">Corriere: ${{ shippingCost.toFixed(2) }}</span>
-                  <p class="shipping-location">Shipping to {{ shippingLocation }}.</p>
+                  <span class="shipping-cost">Mensajería: ${{ shippingCost.toFixed(2) }}</span>
+                  <p class="shipping-location">Envío a {{ shippingLocation }}.</p>
                   <button class="change-address-btn" (click)="changeAddress()">
-                    Change address
+                    Cambiar dirección
                   </button>
                 </div>
               </div>
@@ -167,7 +167,7 @@
             </div>
 
             <button class="checkout-btn" (click)="proceedToCheckout()">
-              Proceed to checkout
+              Proceder al pago
             </button>
           </div>
         </div>
@@ -185,10 +185,10 @@
             <path d="M16 11h5l-5 5-5-5h5z"></path>
           </svg>
         </div>
-        <h2 class="empty-cart-title">Your cart is empty</h2>
-        <p class="empty-cart-message">Looks like you haven't added any items to your cart yet.</p>
+        <h2 class="empty-cart-title">Tu carrito está vacío</h2>
+        <p class="empty-cart-message">Parece que aún no has agregado ningún artículo a tu carrito.</p>
         <button class="continue-shopping-btn" (click)="continueShopping()">
-          Continue Shopping
+          Continuar Comprando
         </button>
       </div>
     </ng-template>
