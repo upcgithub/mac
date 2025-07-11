@@ -13,6 +13,11 @@ export const routes: Routes = [
     pathMatch: 'full'
   },
   {
+    path: 'login',
+    loadComponent: () => import('./features/auth/login').then(m => m.LoginComponent),
+    title: 'Iniciar Sesión - MAC Shop'
+  },
+  {
     path: 'product/:slug',
     loadComponent: () => import('./features/product-detail/product-detail.component').then(m => m.ProductDetailComponent),
     title: 'Product Details - MAC Shop'

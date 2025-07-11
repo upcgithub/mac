@@ -69,9 +69,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log('Tickets clicked');
   }
 
-  onSettingsClick(): void {
-    // TODO: Open settings/account menu
-    console.log('Settings clicked');
+  goToLogin(): void {
+    this.router.navigate(['/login']);
   }
 
   // Cart dropdown methods
