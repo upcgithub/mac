@@ -3,6 +3,8 @@ import { CommonModule } from '@angular/common';
 import { Subscription } from 'rxjs';
 import { Router } from '@angular/router';
 import { CartService, CartItem } from '../../core/services/cart.service';
+import { AuthService } from '../../core/services/auth.service';
+import { User } from '@supabase/supabase-js';
 
 @Component({
   selector: 'app-header',
@@ -16,11 +18,20 @@ export class HeaderComponent implements OnInit, OnDestroy {
   cartItems: CartItem[] = [];
   cartTotal = 0;
   showCartDropdown = false;
+  
+  // Auth properties
+  isAuthenticated = false;
+  currentUser: User | null = null;
+  showUserDropdown = false;
+  
   private cartSubscription?: Subscription;
   private cartItemsSubscription?: Subscription;
+  private authSubscription?: Subscription;
+  private userSubscription?: Subscription;
 
   constructor(
     private cartService: CartService,
+    private authService: AuthService,
     private router: Router
   ) { }
 
@@ -37,6 +48,16 @@ export class HeaderComponent implements OnInit, OnDestroy {
         this.cartTotal = this.cartService.getCartTotal();
       }
     );
+
+    // Suscribirse al estado de autenticación
+    this.authSubscription = this.authService.isAuthenticated$.subscribe(
+      isAuthenticated => this.isAuthenticated = isAuthenticated
+    );
+
+    // Suscribirse al usuario actual
+    this.userSubscription = this.authService.currentUser$.subscribe(
+      user => this.currentUser = user
+    );
   }
 
   ngOnDestroy(): void {
@@ -46,6 +67,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
     }
     if (this.cartItemsSubscription) {
       this.cartItemsSubscription.unsubscribe();
+    }
+    if (this.authSubscription) {
+      this.authSubscription.unsubscribe();
+    }
+    if (this.userSubscription) {
+      this.userSubscription.unsubscribe();
     }
   }
 
@@ -69,11 +96,48 @@ export class HeaderComponent implements OnInit, OnDestroy {
     console.log('Tickets clicked');
   }
 
+  // Auth methods
   goToLogin(): void {
     this.router.navigate(['/login']);
   }
 
+  async logout(): Promise<void> {
+    try {
+      await this.authService.logout();
+      this.showUserDropdown = false;
+    } catch (error) {
+      console.error('Logout error:', error);
+    }
+  }
+
+  goToProfile(): void {
+    // TODO: Navigate to profile page
+    this.showUserDropdown = false;
+    console.log('Profile clicked');
+  }
+
+  goToOrders(): void {
+    // TODO: Navigate to orders page
+    this.showUserDropdown = false;
+    console.log('Orders clicked');
+  }
+
+  // User dropdown methods
+  toggleUserDropdown(): void {
+    this.showUserDropdown = !this.showUserDropdown;
+    if (this.showUserDropdown) {
+      this.showCartDropdown = false;
+    }
+  }
+
   // Cart dropdown methods
+  toggleCartDropdown(): void {
+    this.showCartDropdown = !this.showCartDropdown;
+    if (this.showCartDropdown) {
+      this.showUserDropdown = false;
+    }
+  }
+
   increaseQuantity(productId: string): void {
     const item = this.cartItems.find(item => item.id === productId);
     if (item) {
@@ -100,5 +164,39 @@ export class HeaderComponent implements OnInit, OnDestroy {
   checkout(): void {
     this.showCartDropdown = false;
     this.router.navigate(['/checkout']);
+  }
+
+  // Utility methods
+  getUserDisplayName(): string {
+    if (this.currentUser?.user_metadata?.['full_name']) {
+      return this.currentUser.user_metadata['full_name'];
+    }
+    if (this.currentUser?.email) {
+      return this.currentUser.email.split('@')[0];
+    }
+    return 'Usuario';
+  }
+
+  getUserEmail(): string {
+    return this.currentUser?.email || '';
+  }
+
+  getUserAvatar(): string {
+    return this.currentUser?.user_metadata?.['avatar_url'] || '';
+  }
+
+  // Close dropdowns when clicking outside
+  onDocumentClick(event: Event): void {
+    const target = event.target as HTMLElement;
+    
+    // Close cart dropdown if clicking outside
+    if (this.showCartDropdown && !target.closest('.cart-dropdown-container')) {
+      this.showCartDropdown = false;
+    }
+    
+    // Close user dropdown if clicking outside
+    if (this.showUserDropdown && !target.closest('.user-dropdown-container')) {
+      this.showUserDropdown = false;
+    }
   }
 }

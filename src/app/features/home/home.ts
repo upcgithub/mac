@@ -106,7 +106,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   // Navigation to product detail page
   navigateToProduct(slug: string) {
-    this.router.navigate(['/product', slug]);
+    this.router.navigate(['/products', slug]);
   }
 
 

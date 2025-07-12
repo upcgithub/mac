@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
+import { Subject, takeUntil } from 'rxjs';
 import { HeaderComponent } from '../../layout/header/header';
 import { FooterComponent } from '../../layout/footer/footer';
+import { AuthService, LoginCredentials } from '../../core/services/auth.service';
 
 interface LoginData {
   email: string;
@@ -14,11 +16,13 @@ interface LoginData {
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule, HeaderComponent, FooterComponent],
+  imports: [CommonModule, FormsModule, RouterModule, HeaderComponent, FooterComponent],
   templateUrl: './login.html',
   styleUrls: ['./login.scss']
 })
-export class LoginComponent {
+export class LoginComponent implements OnInit, OnDestroy {
+  private destroy$ = new Subject<void>();
+
   loginData: LoginData = {
     email: '',
     password: '',
@@ -31,7 +35,39 @@ export class LoginComponent {
   emailError = '';
   passwordError = '';
 
-  constructor(private router: Router) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  ngOnInit(): void {
+    // Subscribe to auth service observables
+    this.authService.loading$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(loading => {
+        this.isLoading = loading;
+      });
+
+    this.authService.error$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(error => {
+        this.loginError = error?.message || '';
+      });
+
+    // Check if user is already authenticated
+    this.authService.isAuthenticated$
+      .pipe(takeUntil(this.destroy$))
+      .subscribe(isAuthenticated => {
+        if (isAuthenticated) {
+          this.router.navigate(['/']);
+        }
+      });
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
+  }
 
   togglePassword(): void {
     this.showPassword = !this.showPassword;
@@ -73,83 +109,57 @@ export class LoginComponent {
       return;
     }
 
-    this.isLoading = true;
-    this.loginError = '';
+    const credentials: LoginCredentials = {
+      email: this.loginData.email,
+      password: this.loginData.password,
+      rememberMe: this.loginData.rememberMe
+    };
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      const result = await this.authService.login(credentials);
       
-      // TODO: Integrate with Supabase Auth
-      console.log('Login attempt:', this.loginData);
-      
-      // For now, simulate successful login
-      if (this.loginData.email === 'test@example.com' && this.loginData.password === 'password') {
-        // Store user session
-        if (this.loginData.rememberMe) {
-          localStorage.setItem('user_session', JSON.stringify({
-            email: this.loginData.email,
-            timestamp: new Date().toISOString()
-          }));
-        } else {
-          sessionStorage.setItem('user_session', JSON.stringify({
-            email: this.loginData.email,
-            timestamp: new Date().toISOString()
-          }));
-        }
-        
-        // Navigate to home page
-        this.router.navigate(['/']);
+      if (result.success) {
+        // Navigation will be handled by the auth state subscription
+        console.log('Login successful');
       } else {
-        this.loginError = 'Credenciales incorrectas. Por favor verifica tu correo y contraseña.';
+        // Error will be handled by the error subscription
+        console.log('Login failed:', result.error);
       }
     } catch (error) {
       console.error('Login error:', error);
-      this.loginError = 'Error al iniciar sesión. Por favor intenta nuevamente.';
-    } finally {
-      this.isLoading = false;
+      this.loginError = 'Error inesperado. Por favor intenta nuevamente.';
     }
   }
 
   async loginWithGoogle(): Promise<void> {
-    this.isLoading = true;
-    this.loginError = '';
-
     try {
-      // TODO: Integrate with Supabase Google OAuth
-      console.log('Google login attempt');
+      const result = await this.authService.loginWithGoogle();
       
-      // Simulate OAuth flow
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // For demo purposes, simulate success
-      this.router.navigate(['/']);
+      if (result.success) {
+        console.log('Google login successful');
+        // The OAuth flow will redirect to the callback URL
+      } else {
+        console.log('Google login failed:', result.error);
+      }
     } catch (error) {
       console.error('Google login error:', error);
       this.loginError = 'Error al iniciar sesión con Google. Por favor intenta nuevamente.';
-    } finally {
-      this.isLoading = false;
     }
   }
 
   async loginWithFacebook(): Promise<void> {
-    this.isLoading = true;
-    this.loginError = '';
-
     try {
-      // TODO: Integrate with Supabase Facebook OAuth
-      console.log('Facebook login attempt');
+      const result = await this.authService.loginWithFacebook();
       
-      // Simulate OAuth flow
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
-      // For demo purposes, simulate success
-      this.router.navigate(['/']);
+      if (result.success) {
+        console.log('Facebook login successful');
+        // The OAuth flow will redirect to the callback URL
+      } else {
+        console.log('Facebook login failed:', result.error);
+      }
     } catch (error) {
       console.error('Facebook login error:', error);
       this.loginError = 'Error al iniciar sesión con Facebook. Por favor intenta nuevamente.';
-    } finally {
-      this.isLoading = false;
     }
   }
 } 
