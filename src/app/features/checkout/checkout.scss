@@ -202,6 +202,213 @@
   }
 }
 
+// Address Selector Styles
+.address-selector {
+  margin-bottom: 24px;
+  
+  .selector-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 16px 0;
+  }
+  
+  .saved-addresses {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+  
+  .address-option {
+    .address-label {
+      display: flex;
+      align-items: flex-start;
+      gap: 12px;
+      padding: 16px;
+      border: 2px solid #e5e5e5;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      
+      &:hover {
+        border-color: #D4AF37;
+        background-color: #fefdfb;
+      }
+      
+      .address-radio {
+        margin-top: 4px;
+        accent-color: #D4AF37;
+        
+        &:checked + .address-content {
+          .address-header .address-title {
+            color: #D4AF37;
+            font-weight: 600;
+          }
+        }
+      }
+      
+      .address-content {
+        flex: 1;
+        
+        .address-header {
+          display: flex;
+          align-items: center;
+          gap: 12px;
+          margin-bottom: 8px;
+          
+          .address-title {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #000000;
+            transition: color 0.2s ease;
+          }
+          
+          .address-default {
+            background-color: #D4AF37;
+            color: #ffffff;
+            font-size: 0.75rem;
+            font-weight: 600;
+            padding: 2px 8px;
+            border-radius: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+          }
+        }
+        
+        .address-details {
+          display: flex;
+          flex-direction: column;
+          gap: 4px;
+          
+          .address-name {
+            font-size: 0.9rem;
+            font-weight: 500;
+            color: #333333;
+          }
+          
+          .address-text {
+            font-size: 0.85rem;
+            color: #666666;
+            line-height: 1.4;
+          }
+          
+          .address-phone {
+            font-size: 0.85rem;
+            color: #666666;
+          }
+        }
+      }
+    }
+    
+    // Selected state
+    .address-radio:checked + .address-content {
+      .address-label {
+        border-color: #D4AF37;
+        background-color: #fefdfb;
+      }
+    }
+  }
+  
+  .address-actions {
+    display: flex;
+    justify-content: flex-start;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1px solid #f0f0f0;
+    
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.9rem;
+      padding: 12px 20px;
+      border: 2px dashed #D4AF37;
+      background-color: transparent;
+      color: #D4AF37;
+      border-radius: 8px;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      min-width: 200px;
+      justify-content: center;
+      
+      &:hover {
+        background-color: #D4AF37;
+        color: #ffffff;
+        border-style: solid;
+        transform: translateY(-1px);
+        box-shadow: 0 4px 12px rgba(212, 175, 55, 0.3);
+      }
+      
+      &:active {
+        transform: translateY(0);
+        box-shadow: 0 2px 6px rgba(212, 175, 55, 0.2);
+      }
+      
+      svg {
+        transition: transform 0.2s ease;
+        flex-shrink: 0;
+      }
+      
+      &:hover svg {
+        transform: scale(1.1) rotate(90deg);
+      }
+      
+      span {
+        font-weight: 500;
+        letter-spacing: 0.2px;
+      }
+      
+      // When showing "Cancelar"
+      &.cancel-mode {
+        border-color: #dc3545;
+        color: #dc3545;
+        
+        &:hover {
+          background-color: #dc3545;
+          color: #ffffff;
+        }
+        
+        svg {
+          transform: rotate(45deg);
+        }
+        
+        &:hover svg {
+          transform: rotate(45deg) scale(1.1);
+        }
+      }
+    }
+  }
+}
+
+// No addresses message
+.no-addresses-message {
+  margin-bottom: 24px;
+  
+  .message-content {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 16px;
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+    border-radius: 8px;
+    color: #6c757d;
+    
+    svg {
+      flex-shrink: 0;
+      color: #6c757d;
+    }
+    
+    p {
+      margin: 0;
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
+  }
+}
+
 // Payment Methods
 .payment-methods {
   margin-bottom: 24px;
@@ -575,6 +782,34 @@
     }
   }
   
+  .address-selector {
+    .address-option .address-label {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 8px;
+      
+      .address-radio {
+        margin-top: 0;
+      }
+    }
+    
+    .address-actions {
+      margin-top: 16px;
+      
+      .btn {
+        width: 100%;
+        min-width: auto;
+        justify-content: center;
+        padding: 14px 20px;
+        font-size: 1rem;
+        
+        span {
+          font-size: 0.95rem;
+        }
+      }
+    }
+  }
+  
   .summary-card {
     padding: 20px;
   }
@@ -611,5 +846,48 @@
     .payment-icons .payment-icon {
       height: 20px;
     }
+  }
+} 
+
+// Loading states
+.form-input:disabled,
+.form-select:disabled {
+  background-color: #f8f9fa;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+
+// Success states for saved addresses
+.address-option.saved {
+  .address-label {
+    border-color: #28a745;
+    background-color: #f8fff9;
+    
+    &::after {
+      content: '✓ Guardada';
+      position: absolute;
+      top: 8px;
+      right: 8px;
+      background: #28a745;
+      color: white;
+      font-size: 0.7rem;
+      padding: 2px 6px;
+      border-radius: 10px;
+    }
+  }
+}
+
+// Animation for form transitions
+.shipping-form {
+  transition: all 0.3s ease;
+  
+  &.ng-enter {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  
+  &.ng-enter-active {
+    opacity: 1;
+    transform: translateY(0);
   }
 } 

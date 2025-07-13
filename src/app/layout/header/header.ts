@@ -22,6 +22,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   // Auth properties
   isAuthenticated = false;
   currentUser: User | null = null;
+  userProfile: any = null; // Profile data from profiles table
   showUserDropdown = false;
   
   private cartSubscription?: Subscription;
@@ -35,7 +36,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     private router: Router
   ) { }
 
-  ngOnInit(): void {
+  async ngOnInit(): Promise<void> {
     // Suscribirse al contador de items del carrito
     this.cartSubscription = this.cartService.cartItemCount$.subscribe(
       count => this.cartItemCount = count
@@ -56,8 +57,33 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
     // Suscribirse al usuario actual
     this.userSubscription = this.authService.currentUser$.subscribe(
-      user => this.currentUser = user
+      async user => {
+        this.currentUser = user;
+        if (user) {
+          // Load profile data when user is authenticated
+          await this.loadUserProfile();
+        } else {
+          this.userProfile = null;
+        }
+      }
     );
+  }
+
+  async loadUserProfile(): Promise<void> {
+    console.log('🔄 [HEADER] Cargando perfil del usuario para el header...');
+    
+    try {
+      const { data, error } = await this.authService.getCurrentUserProfile();
+      
+      if (data && !error) {
+        console.log('✅ [HEADER] Perfil del usuario cargado exitosamente:', data);
+        this.userProfile = data;
+      } else {
+        console.error('❌ [HEADER] Error al cargar perfil del usuario:', error);
+      }
+    } catch (error) {
+      console.error('💥 [HEADER] Error inesperado al cargar perfil del usuario:', error);
+    }
   }
 
   ngOnDestroy(): void {
@@ -111,15 +137,13 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   goToProfile(): void {
-    // TODO: Navigate to profile page
     this.showUserDropdown = false;
-    console.log('Profile clicked');
+    this.router.navigate(['/profile']);
   }
 
   goToOrders(): void {
-    // TODO: Navigate to orders page
     this.showUserDropdown = false;
-    console.log('Orders clicked');
+    this.router.navigate(['/orders']);
   }
 
   // User dropdown methods
@@ -168,21 +192,48 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   // Utility methods
   getUserDisplayName(): string {
-    if (this.currentUser?.user_metadata?.['full_name']) {
-      return this.currentUser.user_metadata['full_name'];
+    console.log('🔍 [HEADER] Obteniendo nombre para mostrar...', {
+      userProfile: this.userProfile,
+      currentUser: this.currentUser?.email
+    });
+    
+    if (this.userProfile?.full_name) {
+      console.log('✅ [HEADER] Usando full_name del perfil:', this.userProfile.full_name);
+      return this.userProfile.full_name;
+    }
+    if (this.userProfile?.email) {
+      const displayName = this.userProfile.email.split('@')[0];
+      console.log('✅ [HEADER] Usando email del perfil:', displayName);
+      return displayName;
     }
     if (this.currentUser?.email) {
-      return this.currentUser.email.split('@')[0];
+      const displayName = this.currentUser.email.split('@')[0];
+      console.log('✅ [HEADER] Usando email de auth:', displayName);
+      return displayName;
     }
+    console.log('⚠️ [HEADER] Usando nombre por defecto');
     return 'Usuario';
   }
 
   getUserEmail(): string {
-    return this.currentUser?.email || '';
+    console.log('🔍 [HEADER] Obteniendo email del usuario...', {
+      profileEmail: this.userProfile?.email,
+      authEmail: this.currentUser?.email
+    });
+    
+    const email = this.userProfile?.email || this.currentUser?.email || '';
+    console.log('✅ [HEADER] Email obtenido:', email);
+    return email;
   }
 
   getUserAvatar(): string {
-    return this.currentUser?.user_metadata?.['avatar_url'] || '';
+    console.log('🔍 [HEADER] Obteniendo avatar del usuario...', {
+      profileAvatar: this.userProfile?.avatar_url
+    });
+    
+    const avatar = this.userProfile?.avatar_url || '';
+    console.log('✅ [HEADER] Avatar obtenido:', avatar);
+    return avatar;
   }
 
   // Close dropdowns when clicking outside

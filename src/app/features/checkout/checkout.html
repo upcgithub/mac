@@ -82,7 +82,81 @@
         <!-- Shipping Address -->
         <div class="form-section">
           <h2 class="section-title">Dirección de Envío</h2>
-          <form class="shipping-form">
+          
+          <!-- No saved addresses message -->
+          <div class="no-addresses-message" *ngIf="!showAddressSelector && !showNewAddressForm">
+            <div class="message-content">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                <polyline points="9,22 9,12 15,12 15,22"/>
+              </svg>
+              <p>No tienes direcciones guardadas. Ingresa una nueva dirección.</p>
+            </div>
+          </div>
+
+          <!-- Address Selector (if user has saved addresses) -->
+          <div class="address-selector" *ngIf="showAddressSelector">
+            <h3 class="selector-title">Seleccionar Dirección Guardada</h3>
+            <div class="saved-addresses">
+              <div class="address-option" *ngFor="let address of savedAddresses">
+                <label class="address-label">
+                  <input 
+                    type="radio" 
+                    name="selectedAddress" 
+                    [value]="address.id"
+                    [(ngModel)]="selectedAddressId"
+                    (change)="onAddressSelect(address.id)"
+                    class="address-radio"
+                  />
+                  <div class="address-content">
+                    <div class="address-header">
+                      <span class="address-title">{{ address.title }}</span>
+                      <span class="address-default" *ngIf="address.is_default">Por defecto</span>
+                    </div>
+                    <div class="address-details">
+                      <span class="address-name">{{ address.first_name }} {{ address.last_name }}</span>
+                      <span class="address-text">{{ formatAddressForDisplay(address) }}</span>
+                      <span class="address-phone" *ngIf="address.phone">{{ address.phone }}</span>
+                    </div>
+                  </div>
+                </label>
+              </div>
+            </div>
+            
+            <div class="address-actions">
+              <button 
+                type="button" 
+                class="btn btn-outline"
+                [class.cancel-mode]="showNewAddressForm"
+                (click)="showNewAddressFormToggle()">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                  <line x1="12" y1="5" x2="12" y2="19"/>
+                  <line x1="5" y1="12" x2="19" y2="12"/>
+                </svg>
+                <span>{{ showNewAddressForm ? 'Cancelar Nueva Dirección' : 'Agregar Nueva Dirección' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- New Address Form -->
+          <form class="shipping-form" *ngIf="showNewAddressForm || !showAddressSelector">
+            
+            <!-- Save Address Option -->
+            <div class="form-row" *ngIf="showNewAddressForm">
+              <div class="checkbox-group">
+                <label class="checkbox-label">
+                  <input 
+                    type="checkbox" 
+                    class="checkbox-input"
+                    [(ngModel)]="saveNewAddress"
+                    name="saveNewAddress"
+                  />
+                  <span class="checkbox-custom"></span>
+                  Guardar esta dirección para futuras compras
+                </label>
+              </div>
+            </div>
+
             <div class="form-row">
               <div class="form-group">
                 <label for="address" class="form-label">Dirección *</label>

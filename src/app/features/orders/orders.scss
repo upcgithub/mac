@@ -1,0 +1,840 @@
+// Orders Page Styles - MAC Shop Design (Elegant & Modern)
+:host {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.orders-main {
+  flex: 1;
+  background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+  padding: 40px 0;
+  min-height: calc(100vh - 160px);
+
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 20px;
+  }
+}
+
+// =============================================
+// PAGE HEADER
+// =============================================
+.orders-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 40px;
+  padding: 30px 0;
+  border-bottom: 1px solid #e5e5e5;
+
+  .header-content {
+    .page-title {
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #000000;
+      margin: 0 0 8px 0;
+      letter-spacing: -0.02em;
+    }
+
+    .page-subtitle {
+      font-size: 1.1rem;
+      color: #666666;
+      margin: 0;
+      line-height: 1.5;
+    }
+  }
+
+  .header-actions {
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      
+      svg {
+        transition: transform 0.2s ease;
+      }
+
+      &:hover svg {
+        transform: translateX(-2px);
+      }
+    }
+  }
+}
+
+// =============================================
+// LOADING & ERROR STATES
+// =============================================
+.loading-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+
+  .loading-spinner {
+    margin-bottom: 20px;
+    
+    svg {
+      animation: spin 1s linear infinite;
+      color: #D4AF37;
+    }
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: #666666;
+    margin: 0;
+  }
+}
+
+.error-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+
+  .error-icon {
+    margin-bottom: 20px;
+    
+    svg {
+      color: #ef4444;
+    }
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 12px 0;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #666666;
+    margin: 0 0 24px 0;
+  }
+}
+
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+// =============================================
+// FILTER TABS
+// =============================================
+.filter-tabs {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 32px;
+  padding: 4px;
+  background-color: #f8f9fa;
+  border-radius: 12px;
+  overflow-x: auto;
+
+  .filter-tab {
+    padding: 12px 20px;
+    border: none;
+    background: transparent;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 500;
+    color: #666666;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+    min-width: fit-content;
+
+    &:hover {
+      background-color: #e9ecef;
+      color: #000000;
+    }
+
+    &.active {
+      background-color: #000000;
+      color: #ffffff;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
+  }
+}
+
+// =============================================
+// ORDERS LIST
+// =============================================
+.orders-list {
+  display: grid;
+  gap: 20px;
+}
+
+.order-card {
+  background: #ffffff;
+  border: 1px solid #e5e5e5;
+  border-radius: 16px;
+  padding: 24px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, #D4AF37, #B8860B);
+    transform: scaleX(0);
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    border-color: #D4AF37;
+    box-shadow: 0 8px 25px rgba(212, 175, 55, 0.15);
+    transform: translateY(-2px);
+
+    &::before {
+      transform: scaleX(1);
+    }
+  }
+
+  .order-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 20px;
+
+    .order-number {
+      h3 {
+        font-size: 1.3rem;
+        font-weight: 600;
+        color: #000000;
+        margin: 0 0 4px 0;
+      }
+
+      .order-date {
+        font-size: 0.9rem;
+        color: #666666;
+        font-weight: 500;
+        background: #f8f9fa;
+        padding: 4px 12px;
+        border-radius: 12px;
+        border: 1px solid #e9ecef;
+        display: inline-block;
+        margin-top: 4px;
+        white-space: nowrap;
+        
+        @media (max-width: 768px) {
+          font-size: 0.8rem;
+          padding: 3px 8px;
+        }
+      }
+    }
+
+    .order-status {
+      .status-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 6px;
+        padding: 8px 16px;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+    }
+  }
+
+  .order-summary {
+    margin-bottom: 20px;
+
+    .order-info {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 16px;
+      margin-bottom: 16px;
+
+      .info-item {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+
+        .label {
+          font-size: 0.9rem;
+          color: #666666;
+          font-weight: 500;
+        }
+
+        .value {
+          font-size: 0.9rem;
+          color: #000000;
+          font-weight: 600;
+        }
+      }
+    }
+
+    .order-progress {
+      .progress-bar {
+        width: 100%;
+        height: 6px;
+        background-color: #e9ecef;
+        border-radius: 3px;
+        overflow: hidden;
+        margin-bottom: 8px;
+
+        .progress-fill {
+          height: 100%;
+          border-radius: 3px;
+          transition: width 0.3s ease;
+        }
+      }
+
+      .progress-text {
+        font-size: 0.85rem;
+        color: #666666;
+        font-weight: 500;
+      }
+    }
+  }
+
+  .order-actions {
+    display: flex;
+    justify-content: flex-end;
+
+    .btn {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-weight: 500;
+      
+      svg {
+        transition: transform 0.2s ease;
+      }
+
+      &:hover svg {
+        transform: translateX(2px);
+      }
+    }
+  }
+}
+
+// =============================================
+// EMPTY STATE
+// =============================================
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 20px;
+  text-align: center;
+
+  .empty-icon {
+    margin-bottom: 24px;
+    opacity: 0.6;
+    
+    svg {
+      color: #666666;
+    }
+  }
+
+  h3 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #000000;
+    margin: 0 0 12px 0;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #666666;
+    margin: 0 0 32px 0;
+    max-width: 400px;
+    line-height: 1.5;
+  }
+}
+
+// =============================================
+// ORDER DETAILS MODAL
+// =============================================
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 20px;
+  backdrop-filter: blur(4px);
+}
+
+.order-details-modal {
+  background: #ffffff;
+  border-radius: 16px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+
+  .modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding: 32px 32px 24px;
+    border-bottom: 1px solid #e5e5e5;
+
+    .modal-title {
+      h2 {
+        font-size: 1.8rem;
+        font-weight: 600;
+        color: #000000;
+        margin: 0 0 4px 0;
+      }
+
+      .order-date {
+        font-size: 1rem;
+        color: #666666;
+      }
+    }
+
+    .btn-close {
+      background: none;
+      border: none;
+      padding: 8px;
+      cursor: pointer;
+      border-radius: 8px;
+      transition: background-color 0.2s ease;
+
+      &:hover {
+        background-color: #f8f9fa;
+      }
+
+      svg {
+        color: #666666;
+      }
+    }
+  }
+
+  .modal-body {
+    padding: 32px;
+
+    h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #000000;
+      margin: 0 0 20px 0;
+    }
+  }
+
+  .modal-footer {
+    padding: 24px 32px;
+    border-top: 1px solid #e5e5e5;
+    display: flex;
+    justify-content: flex-end;
+  }
+}
+
+// =============================================
+// STATUS TIMELINE
+// =============================================
+.status-timeline {
+  margin-bottom: 40px;
+
+  .timeline {
+    position: relative;
+    padding-left: 60px;
+
+    &::before {
+      content: '';
+      position: absolute;
+      left: 16px;
+      top: 0;
+      bottom: 0;
+      width: 2px;
+      background: #e5e5e5;
+    }
+
+    .timeline-item {
+      position: relative;
+      margin-bottom: 24px;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+
+      .timeline-marker {
+        position: absolute;
+        left: -44px;
+        top: 4px;
+
+        .marker-icon {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 32px;
+          height: 32px;
+          border-radius: 50%;
+          color: #ffffff;
+          font-size: 14px;
+          font-weight: 600;
+          box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+      }
+
+      .timeline-content {
+        .timeline-header {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 8px;
+
+          h4 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #000000;
+            margin: 0;
+          }
+
+          .timeline-date {
+            font-size: 0.9rem;
+            color: #666666;
+          }
+        }
+
+        .timeline-message {
+          font-size: 0.95rem;
+          color: #666666;
+          margin: 0 0 8px 0;
+          line-height: 1.5;
+        }
+
+        .timeline-details {
+          display: flex;
+          gap: 16px;
+          flex-wrap: wrap;
+
+          .detail-item {
+            font-size: 0.85rem;
+            color: #666666;
+
+            strong {
+              color: #000000;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+// =============================================
+// ORDER ITEMS
+// =============================================
+.order-items {
+  margin-bottom: 40px;
+
+  .items-list {
+    display: grid;
+    gap: 16px;
+  }
+
+  .item-card {
+    display: grid;
+    grid-template-columns: 80px 1fr auto auto;
+    gap: 16px;
+    align-items: center;
+    padding: 16px;
+    background: #f8f9fa;
+    border-radius: 12px;
+    border: 1px solid #e9ecef;
+
+    .item-image {
+      width: 80px;
+      height: 80px;
+      border-radius: 8px;
+      overflow: hidden;
+      background: #ffffff;
+      border: 1px solid #e5e5e5;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .item-details {
+      h4 {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #000000;
+        margin: 0 0 4px 0;
+      }
+
+      .item-type {
+        font-size: 0.85rem;
+        color: #666666;
+        margin: 0 0 2px 0;
+        text-transform: capitalize;
+      }
+
+      .item-variant {
+        font-size: 0.8rem;
+        color: #999999;
+        margin: 0;
+      }
+    }
+
+    .item-quantity {
+      text-align: center;
+      font-size: 0.9rem;
+      color: #666666;
+      font-weight: 500;
+    }
+
+    .item-price {
+      text-align: right;
+
+      .unit-price {
+        display: block;
+        font-size: 0.85rem;
+        color: #666666;
+        margin-bottom: 2px;
+      }
+
+      .total-price {
+        font-size: 1rem;
+        font-weight: 600;
+        color: #000000;
+      }
+    }
+  }
+}
+
+// =============================================
+// ORDER SUMMARY DETAILS
+// =============================================
+.order-summary-details {
+  .summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 32px;
+    margin-top: 20px;
+  }
+
+  .summary-section {
+    h4 {
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: #000000;
+      margin: 0 0 12px 0;
+    }
+
+    p {
+      font-size: 0.95rem;
+      color: #666666;
+      margin: 0 0 8px 0;
+      line-height: 1.5;
+
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+  }
+
+  .totals-breakdown {
+    .total-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 8px 0;
+      border-bottom: 1px solid #e9ecef;
+      font-size: 0.95rem;
+
+      &:last-child {
+        border-bottom: none;
+      }
+
+      &.total-final {
+        font-weight: 600;
+        font-size: 1.1rem;
+        color: #000000;
+        border-top: 2px solid #D4AF37;
+        padding-top: 12px;
+        margin-top: 8px;
+      }
+    }
+  }
+}
+
+// =============================================
+// BUTTONS
+// =============================================
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 24px;
+  border: none;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  gap: 8px;
+
+  &.btn-primary {
+    background-color: #000000;
+    color: #ffffff;
+
+    &:hover {
+      background-color: #333333;
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-outline {
+    background-color: transparent;
+    color: #000000;
+    border: 2px solid #000000;
+
+    &:hover {
+      background-color: #000000;
+      color: #ffffff;
+      transform: translateY(-1px);
+    }
+  }
+
+  &.btn-sm {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none !important;
+  }
+}
+
+// =============================================
+// RESPONSIVE DESIGN
+// =============================================
+@media (max-width: 768px) {
+  .orders-main {
+    padding: 20px 0;
+
+    .container {
+      padding: 0 16px;
+    }
+  }
+
+  .orders-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+    text-align: left;
+
+    .header-content .page-title {
+      font-size: 2rem;
+    }
+  }
+
+  .filter-tabs {
+    .filter-tab {
+      padding: 10px 16px;
+      font-size: 13px;
+    }
+  }
+
+  .order-card {
+    padding: 20px;
+
+    .order-header {
+      flex-direction: column;
+      gap: 12px;
+      align-items: flex-start;
+    }
+
+    .order-summary .order-info {
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+  }
+
+  .order-details-modal {
+    margin: 10px;
+    max-height: calc(100vh - 20px);
+
+    .modal-header,
+    .modal-body,
+    .modal-footer {
+      padding: 20px;
+    }
+  }
+
+  .order-items .item-card {
+    grid-template-columns: 60px 1fr;
+    gap: 12px;
+
+    .item-image {
+      width: 60px;
+      height: 60px;
+    }
+
+    .item-quantity,
+    .item-price {
+      grid-column: 2;
+      text-align: left;
+      margin-top: 8px;
+    }
+  }
+
+  .order-summary-details .summary-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .status-timeline .timeline {
+    padding-left: 50px;
+
+    .timeline-item .timeline-marker {
+      left: -34px;
+
+      .marker-icon {
+        width: 28px;
+        height: 28px;
+        font-size: 12px;
+      }
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .orders-header .header-content .page-title {
+    font-size: 1.8rem;
+  }
+
+  .order-card {
+    padding: 16px;
+  }
+
+  .order-details-modal {
+    .modal-header .modal-title h2 {
+      font-size: 1.5rem;
+    }
+  }
+} 

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject, Observable, map } from 'rxjs';
-import { SupabaseService } from './supabase.service';
+import { SupabaseService, Order, CreateOrderData } from './supabase.service';
 import { User, Session } from '@supabase/supabase-js';
 
 export interface LoginCredentials {
@@ -264,10 +264,315 @@ export class AuthService {
   }
 
   async updateProfile(updates: any) {
+    console.log('🔄 [AUTH_SERVICE] Actualizando perfil del usuario...');
+    console.log('📝 [AUTH_SERVICE] Datos a actualizar:', updates);
+    
     const userId = this.supabaseService.getUserId();
-    if (!userId) return { data: null, error: { message: 'User not authenticated' } };
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado');
+      return { data: null, error: { message: 'User not authenticated' } };
+    }
 
-    return await this.supabaseService.updateProfile(userId, updates);
+    console.log('📡 [AUTH_SERVICE] ID de usuario:', userId);
+    const result = await this.supabaseService.updateProfile(userId, updates);
+    
+    if (result.error) {
+      console.error('❌ [AUTH_SERVICE] Error al actualizar perfil:', result.error);
+    } else {
+      console.log('✅ [AUTH_SERVICE] Perfil actualizado exitosamente:', result.data);
+    }
+    
+    return result;
+  }
+
+  // Extended profile methods
+  async getUserProfileData() {
+    console.log('🔄 [AUTH_SERVICE] Obteniendo datos completos del perfil...');
+    const userId = this.supabaseService.getUserId();
+    
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado');
+      return { data: null, error: { message: 'User not authenticated' } };
+    }
+
+    console.log('📡 [AUTH_SERVICE] ID de usuario:', userId);
+    const result = await this.supabaseService.getUserProfileData(userId);
+    
+    if (result.error) {
+      console.error('❌ [AUTH_SERVICE] Error al obtener datos del perfil:', result.error);
+    } else {
+      console.log('✅ [AUTH_SERVICE] Datos del perfil obtenidos exitosamente:', result.data);
+    }
+    
+    return result;
+  }
+
+  // Shipping address methods
+  async getShippingAddresses() {
+    console.log('🔄 [AUTH_SERVICE] Obteniendo direcciones de envío...');
+    const userId = this.supabaseService.getUserId();
+    
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado');
+      return { data: null, error: { message: 'User not authenticated' } };
+    }
+
+    console.log('📡 [AUTH_SERVICE] ID de usuario:', userId);
+    const result = await this.supabaseService.getShippingAddresses(userId);
+    
+    if (result.error) {
+      console.error('❌ [AUTH_SERVICE] Error al obtener direcciones:', result.error);
+    } else {
+      console.log('✅ [AUTH_SERVICE] Direcciones obtenidas exitosamente:', result.data?.length || 0, 'direcciones');
+    }
+    
+    return result;
+  }
+
+  async createShippingAddress(address: any) {
+    console.log('🔄 [AUTH_SERVICE] Creando nueva dirección de envío...');
+    console.log('📝 [AUTH_SERVICE] Datos de dirección:', address);
+    
+    const userId = this.supabaseService.getUserId();
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado');
+      return { data: null, error: { message: 'User not authenticated' } };
+    }
+
+    const addressWithUserId = {
+      ...address,
+      user_id: userId
+    };
+    
+    console.log('📡 [AUTH_SERVICE] Enviando dirección con user_id:', addressWithUserId);
+    const result = await this.supabaseService.createShippingAddress(addressWithUserId);
+    
+    if (result.error) {
+      console.error('❌ [AUTH_SERVICE] Error al crear dirección:', result.error);
+    } else {
+      console.log('✅ [AUTH_SERVICE] Dirección creada exitosamente:', result.data);
+    }
+    
+    return result;
+  }
+
+  async updateShippingAddress(addressId: string, updates: any) {
+    console.log('🔄 [AUTH_SERVICE] Actualizando dirección de envío...');
+    console.log('📝 [AUTH_SERVICE] ID:', addressId, 'Actualizaciones:', updates);
+    
+    const result = await this.supabaseService.updateShippingAddress(addressId, updates);
+    
+    if (result.error) {
+      console.error('❌ [AUTH_SERVICE] Error al actualizar dirección:', result.error);
+    } else {
+      console.log('✅ [AUTH_SERVICE] Dirección actualizada exitosamente:', result.data);
+    }
+    
+    return result;
+  }
+
+  async deleteShippingAddress(addressId: string) {
+    console.log('🔄 [AUTH_SERVICE] Eliminando dirección de envío...');
+    console.log('📝 [AUTH_SERVICE] ID de dirección:', addressId);
+    
+    const result = await this.supabaseService.deleteShippingAddress(addressId);
+    
+    if (result.error) {
+      console.error('❌ [AUTH_SERVICE] Error al eliminar dirección:', result.error);
+    } else {
+      console.log('✅ [AUTH_SERVICE] Dirección eliminada exitosamente');
+    }
+    
+    return result;
+  }
+
+  async setDefaultShippingAddress(addressId: string) {
+    console.log('🔄 [AUTH_SERVICE] Estableciendo dirección por defecto...');
+    console.log('📝 [AUTH_SERVICE] ID de dirección:', addressId);
+    
+    const userId = this.supabaseService.getUserId();
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado');
+      return { error: { message: 'User not authenticated' } };
+    }
+
+    console.log('📡 [AUTH_SERVICE] ID de usuario:', userId);
+    const result = await this.supabaseService.setDefaultShippingAddress(addressId, userId);
+    
+    if (result.error) {
+      console.error('❌ [AUTH_SERVICE] Error al establecer dirección por defecto:', result.error);
+    } else {
+      console.log('✅ [AUTH_SERVICE] Dirección por defecto establecida exitosamente');
+    }
+    
+    return result;
+  }
+
+  // Get combined user data (auth + profile)
+  async getCurrentUserProfile() {
+    console.log('🔄 [AUTH_SERVICE] Obteniendo perfil combinado del usuario...');
+    const userId = this.supabaseService.getUserId();
+    
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado');
+      return { data: null, error: { message: 'User not authenticated' } };
+    }
+
+    console.log('📡 [AUTH_SERVICE] ID de usuario:', userId);
+
+    try {
+      const { data: profile, error } = await this.supabaseService.getProfile(userId);
+      
+      if (error) {
+        console.error('❌ [AUTH_SERVICE] Error al obtener perfil:', error);
+        return { data: null, error };
+      }
+
+      console.log('📊 [AUTH_SERVICE] Datos del perfil obtenidos:', profile);
+
+      // Combine auth user data with profile data
+      const authUser = this.supabaseService.currentUser;
+      console.log('📊 [AUTH_SERVICE] Datos del usuario auth:', {
+        id: authUser?.id,
+        email: authUser?.email,
+        metadata: authUser?.user_metadata
+      });
+
+      const combinedData = {
+        id: userId,
+        email: authUser?.email || profile?.email || '',
+        full_name: profile?.full_name || authUser?.user_metadata?.['full_name'] || '',
+        avatar_url: profile?.avatar_url || authUser?.user_metadata?.['avatar_url'] || '',
+        phone: profile?.phone || '',
+        date_of_birth: profile?.date_of_birth || '',
+        created_at: profile?.created_at || '',
+        updated_at: profile?.updated_at || ''
+      };
+
+      console.log('✅ [AUTH_SERVICE] Perfil combinado creado exitosamente:', combinedData);
+      return { data: combinedData, error: null };
+    } catch (error) {
+      console.error('💥 [AUTH_SERVICE] Error inesperado al obtener perfil combinado:', error);
+      return { data: null, error };
+    }
+  }
+
+  // =============================================
+  // ORDER MANAGEMENT METHODS
+  // =============================================
+
+  // Create a new order
+  async createOrder(orderData: CreateOrderData) {
+    console.log('🔄 [AUTH_SERVICE] Creando nuevo pedido...');
+    const userId = this.supabaseService.getUserId();
+    
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado para crear pedido');
+      return { data: null, error: { message: 'User not authenticated' } };
+    }
+
+    console.log('📝 [AUTH_SERVICE] Datos del pedido:', orderData);
+
+    try {
+      const { data, error } = await this.supabaseService.createOrder(userId, orderData);
+      
+      if (error) {
+        console.error('❌ [AUTH_SERVICE] Error al crear pedido:', error);
+        return { data: null, error };
+      }
+
+      console.log('✅ [AUTH_SERVICE] Pedido creado exitosamente:', data);
+      return { data, error: null };
+    } catch (error) {
+      console.error('💥 [AUTH_SERVICE] Error inesperado al crear pedido:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get user orders
+  async getUserOrders() {
+    console.log('🔄 [AUTH_SERVICE] Obteniendo pedidos del usuario...');
+    const userId = this.supabaseService.getUserId();
+    
+    if (!userId) {
+      console.error('❌ [AUTH_SERVICE] Usuario no autenticado');
+      return { data: null, error: { message: 'User not authenticated' } };
+    }
+
+    try {
+      const { data, error } = await this.supabaseService.getUserOrders(userId);
+      
+      if (error) {
+        console.error('❌ [AUTH_SERVICE] Error al obtener pedidos:', error);
+        return { data: null, error };
+      }
+
+      console.log('✅ [AUTH_SERVICE] Pedidos obtenidos exitosamente:', data?.length || 0, 'pedidos');
+      return { data, error: null };
+    } catch (error) {
+      console.error('💥 [AUTH_SERVICE] Error inesperado al obtener pedidos:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get order with details
+  async getOrderWithDetails(orderId: string) {
+    console.log('🔄 [AUTH_SERVICE] Obteniendo detalles del pedido:', orderId);
+    
+    try {
+      const { data, error } = await this.supabaseService.getOrderWithDetails(orderId);
+      
+      if (error) {
+        console.error('❌ [AUTH_SERVICE] Error al obtener detalles del pedido:', error);
+        return { data: null, error };
+      }
+
+      console.log('✅ [AUTH_SERVICE] Detalles del pedido obtenidos exitosamente');
+      return { data, error: null };
+    } catch (error) {
+      console.error('💥 [AUTH_SERVICE] Error inesperado al obtener detalles del pedido:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Update order status
+  async updateOrderStatus(orderId: string, status: Order['status'], notes?: string, trackingNumber?: string) {
+    console.log('🔄 [AUTH_SERVICE] Actualizando estado del pedido:', { orderId, status, notes, trackingNumber });
+    
+    try {
+      const { data, error } = await this.supabaseService.updateOrderStatus(orderId, status, notes, trackingNumber);
+      
+      if (error) {
+        console.error('❌ [AUTH_SERVICE] Error al actualizar estado del pedido:', error);
+        return { data: null, error };
+      }
+
+      console.log('✅ [AUTH_SERVICE] Estado del pedido actualizado exitosamente');
+      return { data, error: null };
+    } catch (error) {
+      console.error('💥 [AUTH_SERVICE] Error inesperado al actualizar estado del pedido:', error);
+      return { data: null, error };
+    }
+  }
+
+  // Get order by order number
+  async getOrderByNumber(orderNumber: string) {
+    console.log('🔄 [AUTH_SERVICE] Obteniendo pedido por número:', orderNumber);
+    
+    try {
+      const { data, error } = await this.supabaseService.getOrderByNumber(orderNumber);
+      
+      if (error) {
+        console.error('❌ [AUTH_SERVICE] Error al obtener pedido por número:', error);
+        return { data: null, error };
+      }
+
+      console.log('✅ [AUTH_SERVICE] Pedido obtenido por número exitosamente');
+      return { data, error: null };
+    } catch (error) {
+      console.error('💥 [AUTH_SERVICE] Error inesperado al obtener pedido por número:', error);
+      return { data: null, error };
+    }
   }
 
   // Utility methods
