@@ -6,6 +6,7 @@ import { HeaderComponent } from '../../layout/header/header';
 import { FooterComponent } from '../../layout/footer/footer';
 import { AuthService } from '../../core/services/auth.service';
 import { Order, OrderWithDetails, OrderStatusHistory } from '../../core/services/supabase.service';
+import { formatCurrency } from '../../core/constants/shipping.constants';
 
 @Component({
   selector: 'app-orders',
@@ -28,6 +29,9 @@ export class OrdersComponent implements OnInit, OnDestroy {
   
   // UI state
   activeFilter: 'all' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled' = 'all';
+  
+  // Currency formatter function for template
+  formatCurrency = formatCurrency;
   
   // Status configuration
   statusConfig = {
@@ -241,13 +245,6 @@ export class OrdersComponent implements OnInit, OnDestroy {
       minute: '2-digit',
       hour12: false
     });
-  }
-
-  formatCurrency(amount: number): string {
-    return new Intl.NumberFormat('es-ES', {
-      style: 'currency',
-      currency: 'EUR'
-    }).format(amount);
   }
 
   getStatusConfig(status: Order['status']) {

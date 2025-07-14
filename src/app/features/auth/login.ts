@@ -35,6 +35,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   emailError = '';
   passwordError = '';
 
+  // Captcha properties
+  captchaChecked = false;
+  captchaVerified = false;
+  captchaLoading = false;
+  captchaError = '';
+
   constructor(
     private authService: AuthService,
     private router: Router
@@ -73,6 +79,23 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.showPassword = !this.showPassword;
   }
 
+  onCaptchaChange(): void {
+    if (this.captchaChecked) {
+      this.captchaLoading = true;
+      this.captchaError = '';
+      
+      // Simulate captcha verification with a delay
+      setTimeout(() => {
+        this.captchaVerified = true;
+        this.captchaLoading = false;
+      }, 1500); // 1.5 seconds delay to simulate verification
+    } else {
+      this.captchaVerified = false;
+      this.captchaLoading = false;
+      this.captchaError = '';
+    }
+  }
+
   validateForm(): boolean {
     this.emailError = '';
     this.passwordError = '';
@@ -98,6 +121,12 @@ export class LoginComponent implements OnInit, OnDestroy {
 
     if (this.loginData.password.length < 6) {
       this.passwordError = 'La contraseña debe tener al menos 6 caracteres';
+      return false;
+    }
+
+    // Captcha validation
+    if (!this.captchaVerified) {
+      this.captchaError = 'Por favor verifica que no eres un robot';
       return false;
     }
 
