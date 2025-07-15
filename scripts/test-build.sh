@@ -23,21 +23,21 @@ if [ $? -eq 0 ]; then
     echo "✅ Build successful!"
     
     # Check if dist folder exists
-    if [ -d "dist/uffizi-shop-temp" ]; then
-        echo "✅ Output directory exists: dist/uffizi-shop-temp"
+    if [ -d "dist/uffizi-shop-temp/browser" ]; then
+        echo "✅ Output directory exists: dist/uffizi-shop-temp/browser"
         
         # Check if index.html exists
-        if [ -f "dist/uffizi-shop-temp/index.html" ]; then
+        if [ -f "dist/uffizi-shop-temp/browser/index.html" ]; then
             echo "✅ index.html found"
             
             # Show directory structure
             echo "📁 Build output structure:"
-            ls -la dist/uffizi-shop-temp/
+            ls -la dist/uffizi-shop-temp/browser/
             
             # Optional: Start local server to test
             echo ""
             echo "🌐 To test locally, run:"
-            echo "   npx http-server dist/uffizi-shop-temp -p 8080"
+            echo "   npx http-server dist/uffizi-shop-temp/browser -p 8080"
             echo "   Then visit: http://localhost:8080"
             
         else
@@ -45,7 +45,7 @@ if [ $? -eq 0 ]; then
             exit 1
         fi
     else
-        echo "❌ Output directory not found: dist/uffizi-shop-temp"
+        echo "❌ Output directory not found: dist/uffizi-shop-temp/browser"
         exit 1
     fi
 else

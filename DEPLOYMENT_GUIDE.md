@@ -44,7 +44,7 @@ Vercel debería detectar automáticamente que es Angular, pero verifica:
 
 - **Framework Preset**: Angular
 - **Build Command**: `npm run vercel-build`
-- **Output Directory**: `dist/uffizi-shop-temp`
+- **Output Directory**: `dist/uffizi-shop-temp/browser`
 - **Install Command**: `npm install`
 
 ### 4. **Configurar Variables de Entorno**

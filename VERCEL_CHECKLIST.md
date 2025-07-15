@@ -18,7 +18,7 @@
 ### 3. Pruebas Pre-Despliegue
 - [ ] Ejecutar script de test: `./scripts/test-build.sh`
 - [ ] Verificar que no hay errores en el build
-- [ ] Probar localmente: `npx http-server dist/uffizi-shop-temp -p 8080`
+- [ ] Probar localmente: `npx http-server dist/uffizi-shop-temp/browser -p 8080`
 - [ ] Verificar que todas las rutas funcionan
 
 ## 🚀 Despliegue
@@ -34,7 +34,7 @@
 - [ ] Framework detectado como Angular
 - [ ] Configuración automática verificada:
   - Build Command: `npm run vercel-build`
-  - Output Directory: `dist/uffizi-shop-temp`
+  - Output Directory: `dist/uffizi-shop-temp/browser`
   - Install Command: `npm install`
 
 ### 3. Variables de Entorno
