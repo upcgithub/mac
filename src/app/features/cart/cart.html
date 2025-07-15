@@ -82,7 +82,7 @@
 
         <!-- Coupon Section -->
         <div class="coupon-section">
-          <form class="coupon-form" (ngSubmit)="applyCoupon()">
+          <form class="coupon-form" (ngSubmit)="applyCoupon()" *ngIf="appliedDiscount === 0">
             <input 
               type="text" 
               class="coupon-input" 
@@ -98,6 +98,16 @@
               {{ isApplyingCoupon ? 'Aplicando...' : 'Aplicar cupón' }}
             </button>
           </form>
+          
+          <!-- Applied Coupon Display -->
+          <div class="applied-coupon" *ngIf="appliedDiscount > 0">
+            <div class="coupon-info">
+              <span class="coupon-discount">{{ appliedDiscount }}% de descuento aplicado</span>
+              <button class="remove-coupon-btn" (click)="removeCoupon()">
+                Remover cupón
+              </button>
+            </div>
+          </div>
           
           <!-- Coupon Message -->
           <div class="coupon-message" *ngIf="couponMessage">

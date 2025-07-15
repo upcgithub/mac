@@ -5,6 +5,7 @@ import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { CartService, CartItem } from '../../core/services/cart.service';
 import { AuthService } from '../../core/services/auth.service';
+import { CouponService, Coupon } from '../../core/services/coupon.service';
 import { HeaderComponent } from '../../layout/header/header';
 import { FooterComponent } from '../../layout/footer/footer';
 import { SHIPPING_CONSTANTS, FUTURE_SHIPPING_RATES } from '../../core/constants/shipping.constants';
@@ -116,19 +117,14 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   // Shipping rates by country (configuración futura)
   private shippingRates: ShippingRate[] = FUTURE_SHIPPING_RATES;
 
-  // Valid discount codes
-  private validDiscountCodes: { [key: string]: number } = {
-          'MAC10': 10,
-    'WELCOME5': 5,
-    'ART20': 20,
-    'FLORENCE15': 15,
-    'MEDICI25': 25
-  };
+  // Coupon error message
+  discountErrorMessage: string = '';
 
   constructor(
     private cartService: CartService,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private couponService: CouponService
   ) {}
 
   async ngOnInit(): Promise<void> {
@@ -357,18 +353,37 @@ export class CheckoutComponent implements OnInit, OnDestroy {
 
   // Discount functionality
   applyDiscount(): void {
-    const code = this.discountCode.toUpperCase();
-    if (this.validDiscountCodes[code]) {
-      this.appliedDiscount = this.validDiscountCodes[code];
+    if (!this.discountCode.trim()) {
+      return;
+    }
+
+    // Check if coupon is already applied
+    if (this.appliedDiscount > 0) {
+      this.discountErrorMessage = 'Ya tienes un cupón aplicado. Remuévelo primero.';
+      return;
+    }
+
+    const coupon = this.couponService.validateCoupon(this.discountCode);
+    
+    if (coupon) {
+      this.appliedDiscount = coupon.discount;
       this.discountCode = '';
+      this.discountErrorMessage = '';
     } else {
-      // Show error message (in a real app, you'd use a notification service)
-      alert('Invalid discount code');
+      this.discountErrorMessage = 'Código de cupón inválido. Por favor, inténtalo de nuevo.';
+    }
+
+    // Clear error message after 5 seconds
+    if (this.discountErrorMessage) {
+      setTimeout(() => {
+        this.discountErrorMessage = '';
+      }, 5000);
     }
   }
 
   removeDiscount(): void {
     this.appliedDiscount = 0;
+    this.discountErrorMessage = '';
   }
 
   // Calculation methods
@@ -377,7 +392,7 @@ export class CheckoutComponent implements OnInit, OnDestroy {
   }
 
   getDiscountAmount(): number {
-    return (this.getSubtotal() * this.appliedDiscount) / 100;
+    return this.couponService.calculateDiscount(this.getSubtotal(), this.appliedDiscount);
   }
 
   getGrandTotal(): number {

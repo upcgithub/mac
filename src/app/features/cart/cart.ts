@@ -7,6 +7,7 @@ import { Subscription } from 'rxjs';
 import { HeaderComponent } from '../../layout/header/header';
 import { FooterComponent } from '../../layout/footer/footer';
 import { CartService, CartItem } from '../../core/services/cart.service';
+import { CouponService, Coupon } from '../../core/services/coupon.service';
 import { SHIPPING_CONSTANTS } from '../../core/constants/shipping.constants';
 
 interface SuggestedProduct {
@@ -39,7 +40,8 @@ export class CartComponent implements OnInit, OnDestroy {
 
   constructor(
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private couponService: CouponService
   ) {}
 
   ngOnInit(): void {
@@ -115,6 +117,12 @@ export class CartComponent implements OnInit, OnDestroy {
       return;
     }
 
+    // Check if coupon is already applied
+    if (this.appliedDiscount > 0) {
+      this.couponMessage = 'Ya tienes un cupón aplicado. Remuévelo primero.';
+      return;
+    }
+
     this.isApplyingCoupon = true;
     this.couponMessage = '';
 
@@ -122,21 +130,14 @@ export class CartComponent implements OnInit, OnDestroy {
     setTimeout(() => {
       this.isApplyingCoupon = false;
       
-      // Mock coupon logic
-      const validCoupons = {
-        'MAC10': 10, // 10% discount
-        'WELCOME5': 5,  // 5% discount
-        'ART20': 20     // 20% discount
-      };
-
-      const discount = validCoupons[this.couponCode.toUpperCase() as keyof typeof validCoupons];
+      const coupon = this.couponService.validateCoupon(this.couponCode);
       
-      if (discount) {
-        this.appliedDiscount = discount;
-        this.couponMessage = `Coupon applied! You saved ${discount}% on your order.`;
+      if (coupon) {
+        this.appliedDiscount = coupon.discount;
+        this.couponMessage = `¡Cupón aplicado! Ahorraste ${coupon.discount}% en tu pedido.`;
         this.couponCode = '';
       } else {
-        this.couponMessage = 'Invalid coupon code. Please try again.';
+        this.couponMessage = 'Código de cupón inválido. Por favor, inténtalo de nuevo.';
       }
 
       // Clear message after 5 seconds
@@ -144,6 +145,16 @@ export class CartComponent implements OnInit, OnDestroy {
         this.couponMessage = '';
       }, 5000);
     }, 1000);
+  }
+
+  removeCoupon(): void {
+    this.appliedDiscount = 0;
+    this.couponMessage = 'Cupón removido exitosamente.';
+    
+    // Clear message after 3 seconds
+    setTimeout(() => {
+      this.couponMessage = '';
+    }, 3000);
   }
 
   updateCart(): void {
@@ -157,7 +168,7 @@ export class CartComponent implements OnInit, OnDestroy {
   }
 
   getDiscountAmount(): number {
-    return this.getSubtotal() * (this.appliedDiscount / 100);
+    return this.couponService.calculateDiscount(this.getSubtotal(), this.appliedDiscount);
   }
 
   getTotal(): number {

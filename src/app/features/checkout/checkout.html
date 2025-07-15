@@ -429,6 +429,11 @@
                 Aplicar
               </button>
             </form>
+            
+            <!-- Error Message -->
+            <div class="discount-error" *ngIf="discountErrorMessage">
+              <p>{{ discountErrorMessage }}</p>
+            </div>
           </div>
 
           <!-- Applied Discount -->
